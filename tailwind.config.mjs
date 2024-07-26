@@ -9,12 +9,13 @@ export default {
       },
     },
     extend: {
+      backgroundImage: { hero: "url('../public/images/background.png')" },
+      transitionDuration: {
+        primary: "750ms",
+      },
       transitionTimingFunction: {
         primary: "cubic-bezier(.16,1,.3,1)",
       },
-			transitionDuration: {
-				primary: '750ms'
-			}
     },
   },
   plugins: [],
