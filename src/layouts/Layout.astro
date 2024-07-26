@@ -24,7 +24,7 @@ const { title } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="bg-hero antialiased">
+  <body class="bg-hero antialiased backdrop-blur-[34px] bg-cover bg-no-repeat">
     <slot />
   </body>
 </html>
@@ -40,7 +40,7 @@ const { title } = Astro.props;
   }
   code {
     font-family:
-      Menlo,
+      "Surreal",
       Monaco,
       Lucida Console,
       Liberation Mono,

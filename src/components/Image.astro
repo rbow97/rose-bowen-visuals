@@ -1,0 +1,22 @@
+---
+const { src, caption, href } = Astro.props;
+---
+
+<!-- TODO: Work on caption animation -->
+<a target="_blank" href={href} class="relative group">
+  <img
+    alt="random man"
+    loading="lazy"
+    width="1200"
+    height="670"
+    decoding="async"
+    class="w-full object-cover object-center rounded-lg"
+    src={src}
+  />
+  <div
+    class="bg-primary-peach px-5 py-6 rounded-l-lg rounded-r-[40px] mt-3 md:mt-0 md:absolute bottom-6 left-6 flex justify-between duration-secondary transition-[width] ease-primary w-full md:w-1/2 md:group-hover:w-[calc(100%_-_48px)]"
+  >
+    <h3 class="text-primary-purple text-[24px] truncate">{caption}</h3>
+    <img src="/images/icons/arrow.svg" />
+  </div>
+</a>
