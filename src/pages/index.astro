@@ -1,0 +1,23 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Grid from "../components/Grid.astro";
+import Container from "../components/Container.astro";
+---
+
+<Layout title="Welcome to my site!">
+  <main>
+    <Container>
+      <Grid>
+        <p class="col-span-4 md:col-span-12">hi</p>
+      </Grid>
+    </Container>
+  </main>
+</Layout>
+
+<style>
+  main {
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+</style>
