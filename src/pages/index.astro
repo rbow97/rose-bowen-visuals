@@ -2,22 +2,22 @@
 import Layout from "../layouts/Layout.astro";
 import Grid from "../components/Grid.astro";
 import Container from "../components/Container.astro";
+import NavItem from "../components/NavBar/NavItem.astro";
+import NavBar from "../components/NavBar/NavBar.astro";
 ---
 
-<Layout title="Welcome to my site!">
+<Layout title="Rose Bowen Visuals">
   <main>
     <Container>
-      <Grid>
-        <p class="col-span-4 md:col-span-12">hi</p>
-      </Grid>
+      <header>
+        <div class="mt-4 md:mt-8 flex items-center justify-center">
+          <NavBar>
+            <NavItem> Rose Bowen </NavItem>
+            <NavItem href="/#info"> Info </NavItem>
+          </NavBar>
+        </div>
+      </header>
+      <Grid />
     </Container>
   </main>
 </Layout>
-
-<style>
-  main {
-    color: white;
-    font-size: 20px;
-    line-height: 1.6;
-  }
-</style>
