@@ -5,44 +5,20 @@ import Container from "../components/Container.astro";
 import NavItem from "../components/NavBar/NavItem.astro";
 import NavBar from "../components/NavBar/NavBar.astro";
 import Hero from "../components/homepage/Hero.astro";
-import Image from "../components/Image.astro";
+import Info from "../components/homepage/Info.astro";
+import ImageGrid from "../components/homepage/ImageGrid.astro";
+import Header from "../components/homepage/Header.astro";
 ---
 
 <Layout title="Rose Bowen Visuals">
-  <main class="h-svh">
+  <main>
     <Container>
-      <header class="absolute top-0 w-[calc(100%_-_32px)] left-4 right-4">
-        <div class="mt-4 md:mt-8 flex items-center justify-center">
-          <NavBar>
-            <NavItem> Rose Bowen </NavItem>
-            <NavItem href="/#info"> Info </NavItem>
-          </NavBar>
-        </div>
-      </header>
+      <Header />
       <!-- TODO: Work on scroll animation -->
       <Grid>
         <Hero />
-        <div class="col-span-4">
-          <Image
-            src="/images/covers/cuckoo.png"
-            href="/"
-            caption="Cuckoo Fibre"
-          />
-        </div>
-        <div class="col-span-4">
-          <Image
-            src="/images/covers/cuckoo.png"
-            href="/"
-            caption="Cuckoo Fibre"
-          />
-        </div>
-        <div class="col-span-4">
-          <Image
-            src="/images/covers/cuckoo.png"
-            href="/"
-            caption="Cuckoo Fibre"
-          />
-        </div>
+        <ImageGrid />
+        <Info />
       </Grid>
     </Container>
   </main>

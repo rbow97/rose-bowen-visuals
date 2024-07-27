@@ -1,0 +1,19 @@
+---
+import NavBar from "../NavBar/NavBar.astro";
+import NavItem from "../NavBar/NavItem.astro";
+---
+
+<header class="absolute top-0 w-[calc(100%_-_32px)] left-4 right-4">
+  <div class="mt-4 md:mt-8 flex items-center justify-center">
+    <NavBar>
+      <NavItem> Rose Bowen </NavItem>
+      <NavItem href="/#info"> Info </NavItem>
+    </NavBar>
+    <button aria-label="change the colour theme" class="ml-5">
+      <img
+        class="md:hover:scale-[1.1] ease-primary duration-primary"
+        src="/images/icons/theme-button.svg"
+      />
+    </button>
+  </div>
+</header>
