@@ -1,20 +1,25 @@
 ---
-
+import Container from "../Container.astro";
+import Grid from "../Grid.astro";
+import Carousel from "./Carousel.astro";
 ---
 
-<section
-  aria-label="about me"
-  id="info"
-  class="col-span-4 md:col-span-9 pt-[56px] md:pt-[180px]"
->
-  <p class="text-[24px] md:text-[40px] text-primary-peach">
-    I’m an independent design agency partnering with those making a positive
-    difference in the world.
-    <br />
-    <br />
-    We tell stories people care about, and build brands.
-  </p>
-  <br />
-  <br />
-  <p>Email me rose@email.com</p>
+<section aria-label="about me" id="info">
+  <Container>
+    <Grid>
+      <div class="col-span-4 md:col-span-9 pt-[56px] md:pt-[180px]">
+        <p class="text-[24px] md:text-[40px] text-primary-peach">
+          I’m an independent design agency partnering with those making a
+          positive difference in the world.
+          <br />
+          <br />
+          We tell stories people care about, and build brands.
+        </p>
+        <br />
+        <br />
+        <p>Email me rose@email.com</p>
+      </div>
+    </Grid>
+  </Container>
+  <Carousel />
 </section>

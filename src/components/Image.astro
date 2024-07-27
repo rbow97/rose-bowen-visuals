@@ -1,26 +1,12 @@
 ---
-const { src, caption, href } = Astro.props;
+const { src, alt } = Astro.props;
 ---
 
-<!-- TODO: Work on caption animation --><!-- TODO: Fix hover animation on smaller screens -->
-<a target="_blank" href={href} class="relative group">
-  <img
-    alt="random man"
-    loading="lazy"
-    width="1200"
-    height="670"
-    decoding="async"
-    class="w-full object-cover object-center rounded-lg"
-    src={src}
-  />
-  <div
-    class="bg-primary-peach md:px-5 p-4 md:py-6 rounded-l-xl rounded-r-[40px] mt-3 md:mt-0 absolute bottom-6 left-6 flex justify-between duration-secondary transition-[width] ease-primary w-[calc(100%_-_48px)] gap-4 md:right-6 min-w-fit max-w-[calc(100%_-_48px)] md:w-1/4 md:group-hover:w-[calc(100%_-_48px)]"
-  >
-    <h3
-      class="text-primary-purple font-medium text-[18px] md:text-[24px] truncate"
-    >
-      {caption}
-    </h3>
-    <img width="24" class="w-6 md:w-9" src="/images/icons/arrow.svg" />
-  </div>
-</a>
+<img
+  alt={alt}
+  loading="lazy"
+  width="340"
+  decoding="async"
+  class="aspect-auto w-[260px] md:w-[340px] rounded object-cover object-center"
+  src={src}
+/>
