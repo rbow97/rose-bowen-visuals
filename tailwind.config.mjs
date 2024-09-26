@@ -5,14 +5,21 @@ export default {
     fontFamily: {
       surreal: ["Surreal", "sans-serif"],
     },
+    fontSize: {
+      hero: "16vw",
+    },
     colors: {
       primary: {
         peach: "#FFBFC3",
+        blue: "#4CFFF4",
+        white: "#FFFFFF",
         purple: "#5B16FF",
       },
     },
     extend: {
-      backgroundImage: { hero: "url('/images/background.png')" },
+      backgroundImage: {
+        hero: "url('/images/backgrounds/rose-bowen-blue.png')",
+      },
 
       transitionDuration: {
         primary: "750ms",

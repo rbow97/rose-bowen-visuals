@@ -9,15 +9,13 @@ import Header from "../components/homepage/Header.astro";
 ---
 
 <Layout title="Rose Bowen Visuals">
-  <main>
+  <main class="overflow-hidden">
+    <Hero />
+    <Info />
     <Container>
-      <Header />
       <!-- TODO: Work on scroll animation -->
-      <Grid>
-        <Hero />
-      </Grid>
+      <Grid />
     </Container>
     <ImageGrid />
-    <Info />
   </main>
 </Layout>

@@ -1,14 +1,18 @@
 ---
 import HeroImage from "../HeroImage.astro";
+import Header from "./Header.astro";
 ---
 
 <section
-  class="col-span-4 md:col-span-12 mt-[110px] md:mt-[175px] flex justify-end flex-col gap-[50px] md:gap-[120px]"
+  class="col-span-4 md:col-span-12 flex justify-end flex-col gap-[50px] md:gap-[120px] h-screen"
 >
-  <h1
-    class="font-surreal text-[40px] md:text-[120px] text-primary-peach text-center"
-  >
-    One-of-a-kind web connoisseur
-  </h1>
-  <HeroImage src="/images/covers/man.png" caption="Rose's friend" href="/" />
+  <Header />
+  <h1 class="text-primary-blue w-full text-hero text-center">Rose Bowen</h1>
+  <!-- <HeroImage src="/images/covers/man.png" caption="Rose's friend" href="/" /> -->
 </section>
+
+<style>
+  .full-width-text {
+    line-height: 90%;
+  }
+</style>
