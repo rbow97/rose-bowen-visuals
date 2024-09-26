@@ -16,32 +16,33 @@ const rotations = [
 ];
 ---
 
-<div
-  class="flex h-[80vw] sm:h-[55vw] pb-[40px] items-end justify-center md:max-w-[calc(100%_-_40px)] md:mx-auto lg:max-w-7xl lg:px-[20px] -mx-20"
->
-  {
-    images.map((image, index) => (
-      <div
-        class={`relative w-1/2 md:w-1/3 aspect-[1/1.2] bg-primary-white rounded-md md:rounded-xl shadow-lg overflow-hidden transform transition-all ease-primary duration-700  ${rotations[index]} group`}
-      >
-        <div class="p-1.5 md:p-4 pb-[20px] md:pb-[52px] h-full relative">
-          <Image
-            src={image.src}
-            href="/"
-            caption={image.caption}
-            class="w-full h-full object-cover"
-          />
-          <div class="absolute h-[20px] md:h-[52px] bottom-0 left-0 right-0 text-primary-white font-semibold text-[10px] md:text-[14px] flex items-center justify-center p-2 md:p-4 transition-opacity duration-300">
-            <p class="reveal-animation overflow-hidden whitespace-nowrap">
-              {image.caption}
-            </p>
+<section aria-label="polaroids" id="polaroids">
+  <div
+    class="flex h-[80vw] sm:h-[55vw] pb-[40px] mt-[20px] items-end justify-center md:max-w-[calc(100%_-_40px)] md:mx-auto lg:max-w-7xl lg:px-[20px] -mx-20"
+  >
+    {
+      images.map((image, index) => (
+        <div
+          class={`relative w-1/2 md:w-1/3 aspect-[1/1.2] bg-primary-white rounded-md md:rounded-xl shadow-lg overflow-hidden transform transition-all ease-primary duration-700  ${rotations[index]} group`}
+        >
+          <div class="p-1.5 md:p-4 pb-[20px] md:pb-[52px] h-full relative">
+            <Image
+              src={image.src}
+              href="/"
+              caption={image.caption}
+              class="w-full h-full object-cover"
+            />
+            <div class="absolute h-[20px] md:h-[52px] bottom-0 left-0 right-0 text-primary-white font-semibold text-[10px] md:text-[14px] flex items-center justify-center p-2 md:p-4 transition-opacity duration-300">
+              <p class="reveal-animation overflow-hidden whitespace-nowrap">
+                {image.caption}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    ))
-  }
-</div>
-
+      ))
+    }
+  </div>
+</section>
 <style>
   .aspect-[1/1.2] {
     aspect-ratio: 1 / 1.2;

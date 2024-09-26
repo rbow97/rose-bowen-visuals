@@ -1,28 +1,26 @@
 ---
 import Container from "../Container.astro";
 import Grid from "../Grid.astro";
-import Carousel from "./Polaroids.astro";
 ---
 
 <section aria-label="about me" id="info">
   <Container>
     <Grid>
       <div
-        class="col-span-4 md:col-span-7 pt-[56px] md:pt-[80px] leading-10 [&_*]:text-primary-blue"
+        class="col-span-4 md:col-span-7 pt-[56px] md:pt-[80px] leading-10 [&_*]:text-primary-blue info-text-container"
       >
-        <p class="text-[24px] md:text-[40px]">
-          I’m a creative Frontend Developer with a love of making fun, fast,
+        <p class="text-[24px] md:text-[40px] leading-[110%] info-text">
+          I'm a creative Frontend Developer with a love of making fun, fast,
           accessible websites.
-          <br />
-          <br />
-          Feel free to get in touch if you have an idea you would like brought to
-          life :)
-          <br />
-          <br />
+        </p>
+        <p class="text-[24px] md:text-[40px] leading-[110%] info-text">
+          Feel free to get in touch if you have an idea you would like brought
+          to life :)
+        </p>
+        <p class="text-[24px] md:text-[40px] leading-[110%] info-text">
           Scroll down to see more about me!
         </p>
-        <br />
-        <p class="text-[16px] md:text-[24px]">
+        <p class="text-[16px] md:text-[24px] leading-[110%] info-text">
           Email me <span class="underline underline-offset-8"
             >rosebowen1997@gmail.com</span
           >
@@ -30,5 +28,101 @@ import Carousel from "./Polaroids.astro";
       </div>
     </Grid>
   </Container>
-  <Carousel />
 </section>
+
+<style>
+  .info-text-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .info-text {
+    opacity: 0;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+</style>
+
+<script>
+  function animateText(element: HTMLElement): Promise<void> {
+    return new Promise((resolve) => {
+      // This extracts the text content from the element, clears the element's HTML, and sets its opacity to 1.
+      const text: string = element.textContent || "";
+      element.innerHTML = "";
+      element.style.opacity = "1";
+
+      // This splits the text into words and filters out any empty words.
+      const words: string[] = text
+        .split(" ")
+        .filter((word) => word.trim() !== "");
+      words.forEach((word: string, wordIndex: number) => {
+        const wordSpan: HTMLSpanElement = document.createElement("span");
+        wordSpan.style.display = "inline-block";
+
+        // Character animation logic
+        [...word].forEach((char: string, charIndex: number) => {
+          if (char.trim() !== "") {
+            // This creates a span for each character, sets initial styles, and applies an animation to fade in and move up.
+            const span: HTMLSpanElement = document.createElement("span");
+            span.textContent = char;
+            span.style.opacity = "0";
+            span.style.display = "inline-block";
+            span.style.transform = "translateY(20px)";
+            wordSpan.appendChild(span);
+
+            const delay: number = wordIndex * 60 + charIndex * 20;
+            span.animate(
+              [
+                { opacity: 0, transform: "translateY(20px)" },
+                { opacity: 1, transform: "translateY(0)" },
+              ],
+              {
+                duration: 4000,
+                easing: "cubic-bezier(.16,1,.3,1)",
+                fill: "forwards",
+                delay: delay,
+              }
+            );
+          }
+        });
+
+        // Append the word span to the element and add a space if it's not the last word.
+        if (wordSpan.childNodes.length > 0) {
+          element.appendChild(wordSpan);
+          if (wordIndex < words.length - 1) {
+            element.appendChild(document.createTextNode(" "));
+          }
+        }
+      });
+
+      setTimeout(resolve, words.length * 50 + 1000 + 200);
+    });
+  }
+
+  async function animateInfoTexts(): Promise<void> {
+    const infoTexts: NodeListOf<HTMLElement> =
+      document.querySelectorAll(".info-text");
+    for (const element of infoTexts) {
+      await animateText(element);
+    }
+  }
+
+  const observer: IntersectionObserver = new IntersectionObserver(
+    (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry: IntersectionObserverEntry) => {
+        if (entry.isIntersecting) {
+          animateInfoTexts();
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  const infoSection: HTMLElement | null = document.querySelector("#info");
+  if (infoSection) {
+    observer.observe(infoSection);
+  }
+</script>
