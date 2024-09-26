@@ -1,14 +1,16 @@
 ---
 import Container from "../Container.astro";
 import Grid from "../Grid.astro";
-import Carousel from "./Carousel.astro";
+import Carousel from "./Polaroids.astro";
 ---
 
 <section aria-label="about me" id="info">
   <Container>
     <Grid>
-      <div class="col-span-4 md:col-span-7 pt-[56px] md:pt-[80px]">
-        <p class="text-[24px] md:text-[40px] text-primary-peach">
+      <div
+        class="col-span-4 md:col-span-7 pt-[56px] md:pt-[80px] leading-10 [&_*]:text-primary-blue"
+      >
+        <p class="text-[24px] md:text-[40px]">
           I’m an independent design agency partnering with those making a
           positive difference in the world.
           <br />
@@ -16,8 +18,11 @@ import Carousel from "./Carousel.astro";
           We tell stories people care about, and build brands.
         </p>
         <br />
-        <br />
-        <p>Email me rose@email.com</p>
+        <p class="text-[16px] md:text-[24px]">
+          Email me <span class="underline underline-offset-8"
+            >rosebowen1997@gmail.com</span
+          >
+        </p>
       </div>
     </Grid>
   </Container>

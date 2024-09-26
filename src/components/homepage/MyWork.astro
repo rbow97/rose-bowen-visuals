@@ -1,0 +1,64 @@
+---
+import ImageWithCaption from "../ImageWithCaption.astro";
+
+const workItems = [
+  {
+    title: "Cuckoo Broadband",
+    description:
+      "I'm an independent design agency partnering with those making a positive difference in the world.",
+    image: "/images/covers/cuckoo.png",
+    href: "/",
+    caption: "Rose's friend",
+    buttonText: "Rose's friend",
+  },
+  {
+    title: "Alex Hughes photography",
+    description:
+      "I'm an independent design agency partnering with those making a positive difference in the world.",
+    image: "/images/covers/cuckoo.png",
+    href: "/",
+    caption: "Alex Hughes photography",
+    buttonText: "Alex Hughes photography",
+  },
+  {
+    title: "Feature Films Featuring",
+    description:
+      "I'm an independent design agency partnering with those making a positive difference in the world.",
+    image: "/images/covers/cuckoo.png",
+    href: "/",
+    caption: "Feature Films Featuring",
+    buttonText: "Feature Films Featuring",
+  },
+];
+---
+
+<section aria-label="My work" class="bg-purple-600 p-8 pb-[50px] text-white">
+  <h2 class="text-[34px] md:text-[60px] mb-[20px] md:mb-12 text-primary-blue">
+    My work
+  </h2>
+
+  <div class="space-y-16">
+    {
+      workItems.map((item, index) => (
+        <div class="flex flex-col md:flex-row gap-8 items-start">
+          <div class="w-full md:w-1/3">
+            <h3 class="text-[28px] md:text-[36px] mb-4 border-t-2 text-primary-blue border-t-primary-blue pt-[24px] md:pt-[30px]">
+              {item.title}
+            </h3>
+            <p class="text-[20px] md:text-[30px] text-primary-blue leading-[110%]">
+              {item.description}
+            </p>
+          </div>
+          <div class="w-full md:w-2/3">
+            <ImageWithCaption
+              src={item.image}
+              href={item.href}
+              caption={item.caption}
+              buttonText={item.buttonText}
+            />
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
