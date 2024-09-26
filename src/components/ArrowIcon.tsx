@@ -1,9 +1,11 @@
+import type React from "preact/compat";
+
 interface ArrowIconProps {
   color?: string;
   className?: string;
 }
 
-export function ArrowIcon(props: ArrowIconProps): JSX.Element {
+export function ArrowIcon(props: ArrowIconProps): React.ReactNode {
   const { color = "currentColor", className = "" } = props;
 
   return (
