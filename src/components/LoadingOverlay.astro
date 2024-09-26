@@ -1,0 +1,152 @@
+---
+
+---
+
+<div
+  class="relative duration-500 transition-all ease-primary flex items-center justify-center opacity-100"
+  id="loading-overlay"
+>
+  <img
+    src="/images/icons/theme-button.svg"
+    alt="Loading"
+    id="loading-image"
+    class="w-24 h-24 animate-spin-slow"
+  />
+</div>
+
+<style>
+  #loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100dvh;
+    z-index: 9999;
+    transition: opacity 0.5s ease-in-out;
+    animation: background-color-change 10s infinite;
+  }
+
+  :global(body.loading-active) {
+    overflow: hidden;
+  }
+
+  .fade-out {
+    opacity: 0 !important;
+  }
+
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  #loading-image {
+    animation:
+      spin-slow 4s linear infinite,
+      svg-color-change 10s infinite;
+  }
+
+  @keyframes background-color-change {
+    0%,
+    100% {
+      background-color: #000000;
+    }
+    25% {
+      background-color: #5b16ff;
+    }
+    50% {
+      background-color: #ffbfc3;
+    }
+    75% {
+      background-color: #4cfff4;
+    }
+  }
+
+  @keyframes svg-color-change {
+    0%,
+    100% {
+      filter: invert(79%) sepia(72%) saturate(544%) hue-rotate(287deg)
+        brightness(101%) contrast(101%);
+    } /* #FFBFC3 */
+    25% {
+      filter: invert(68%) sepia(85%) saturate(1619%) hue-rotate(155deg)
+        brightness(99%) contrast(101%);
+    } /* #4CFFF4 */
+    50% {
+      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg)
+        brightness(103%) contrast(103%);
+    } /* #FFFFFF */
+    75% {
+      filter: invert(21%) sepia(85%) saturate(4990%) hue-rotate(260deg)
+        brightness(97%) contrast(105%);
+    } /* #5B16FF */
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const loadingOverlay: HTMLElement =
+      document.getElementById("loading-overlay")!;
+    const body = document.body;
+
+    if (!loadingOverlay) {
+      console.error("Loading overlay element not found");
+      return;
+    }
+
+    body.classList.add("loading-active");
+
+    function hideLoadingOverlay(): void {
+      loadingOverlay.classList.add("fade-out");
+      setTimeout(() => {
+        loadingOverlay.style.display = "none";
+        body.classList.remove("loading-active");
+      }, 500);
+    }
+
+    const images: HTMLCollectionOf<HTMLImageElement> =
+      document.getElementsByTagName("img");
+    let loadedImages: number = 0;
+    let startTime: number = Date.now();
+
+    function checkAllImagesLoaded(): void {
+      if (loadedImages === images.length) {
+        const elapsedTime = Date.now() - startTime;
+        const remainingTime = Math.max(3000 - elapsedTime, 0);
+        setTimeout(hideLoadingOverlay, remainingTime);
+      }
+    }
+
+    function imageLoaded(): void {
+      loadedImages++;
+      checkAllImagesLoaded();
+    }
+
+    if (images.length === 0) {
+      // If there are no images, wait 3 seconds before hiding the overlay
+      setTimeout(hideLoadingOverlay, 3000);
+    } else {
+      for (let i: number = 0; i < images.length; i++) {
+        if (images[i].complete) {
+          imageLoaded();
+        } else {
+          images[i].addEventListener("load", imageLoaded);
+          images[i].addEventListener("error", imageLoaded);
+        }
+      }
+    }
+
+    // Fallback: Hide overlay after 10 seconds even if not all images have loaded
+    setTimeout(() => {
+      if (loadedImages < images.length) {
+        console.warn(
+          `Not all images loaded after 10 seconds. Loaded ${loadedImages} out of ${images.length}`
+        );
+        hideLoadingOverlay();
+      }
+    }, 10000);
+  });
+</script>
