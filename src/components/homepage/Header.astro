@@ -1,19 +1,31 @@
 ---
+import { InstagramIcon } from "../icons/InstagramIcon";
+import { LinkedInIcon } from "../icons/LinkedInIcon";
 import NavBar from "../NavBar/NavBar.astro";
 import NavItem from "../NavBar/NavItem.astro";
 ---
 
-<header class="absolute top-0 w-[calc(100%_-_32px)] left-4 right-4">
-  <div class="mt-4 md:mt-8 flex items-center justify-center">
+<header
+  class="absolute top-0 w-[calc(100%_-_32px)] left-4 right-4 flex justify-between mt-4 md:mt-8"
+>
+  <div class="w-full flex items-center md:justify-start justify-between">
     <NavBar>
       <NavItem> Rose Bowen </NavItem>
       <NavItem href="/#info"> Info </NavItem>
     </NavBar>
-    <button aria-label="change the colour theme" class="ml-5">
+    <button aria-label="change the colour theme" class="ml-4">
       <img
         class="md:hover:scale-[1.1] ease-primary duration-primary"
         src="/images/icons/theme-button.svg"
       />
     </button>
+  </div>
+  <div class="gap-4 items-center md:flex hidden">
+    <a href="">
+      <LinkedInIcon color="#4CFFF4" />
+    </a>
+    <a href="">
+      <InstagramIcon color="#4CFFF4" />
+    </a>
   </div>
 </header>

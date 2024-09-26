@@ -7,12 +7,60 @@ import Header from "./Header.astro";
   class="col-span-4 md:col-span-12 flex justify-center md:justify-end flex-col gap-[50px] md:gap-[120px] h-[calc(100dvh)]"
 >
   <Header />
-  <h1 class="text-primary-blue w-full text-hero text-center">Rose Bowen</h1>
-  <!-- <HeroImage src="/images/covers/man.png" caption="Rose's friend" href="/" /> -->
+  <h1
+    class="[&>span]:text-primary-blue w-full text-hero text-center"
+    id="hero-title"
+  >
+    Rose Bowen
+  </h1>
 </section>
 
 <style>
-  .full-width-text {
-    line-height: 90%;
+  #hero-title {
+    opacity: 0;
+  }
+
+  #hero-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(50px);
   }
 </style>
+
+<script>
+  function animateHeroTitle() {
+    const heroTitle = document.getElementById("hero-title");
+    if (!heroTitle) return;
+
+    const text = heroTitle.textContent || "";
+    heroTitle.innerHTML = "";
+    heroTitle.style.opacity = "1";
+
+    const letters = text.split("").map((char) => {
+      const span = document.createElement("span");
+      span.textContent = char === " " ? "\u00A0" : char; // Use non-breaking space for actual spaces
+      span.style.opacity = "0";
+      span.style.display = "inline-block";
+      span.style.transform = "translateY(50px)";
+      heroTitle.appendChild(span);
+      return span;
+    });
+
+    letters.forEach((span, index) => {
+      span.animate(
+        [
+          { opacity: 0, transform: "translateY(50px)" },
+          { opacity: 1, transform: "translateY(0)" },
+        ],
+        {
+          duration: 3000,
+          easing: "cubic-bezier(.16,1,.3,1)",
+          fill: "forwards",
+          delay: index * 60,
+        }
+      );
+    });
+  }
+
+  window.addEventListener("loadingOverlayHidden", animateHeroTitle);
+</script>

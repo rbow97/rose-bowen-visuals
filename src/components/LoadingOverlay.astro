@@ -88,8 +88,7 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const loadingOverlay: HTMLElement =
-      document.getElementById("loading-overlay")!;
+    const loadingOverlay = document.getElementById("loading-overlay")!;
     const body = document.body;
 
     if (!loadingOverlay) {
@@ -99,11 +98,13 @@
 
     body.classList.add("loading-active");
 
-    function hideLoadingOverlay(): void {
+    function hideLoadingOverlay() {
       loadingOverlay.classList.add("fade-out");
       setTimeout(() => {
         loadingOverlay.style.display = "none";
         body.classList.remove("loading-active");
+        // Dispatch a custom event when the loading overlay is hidden
+        window.dispatchEvent(new CustomEvent("loadingOverlayHidden"));
       }, 500);
     }
 
