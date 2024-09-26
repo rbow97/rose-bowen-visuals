@@ -13,7 +13,7 @@ import NavItem from "../NavBar/NavItem.astro";
       <NavItem> Rose Bowen </NavItem>
       <NavItem href="/#info"> Info </NavItem>
     </NavBar>
-    <button aria-label="change the colour theme" class="ml-4">
+    <button aria-label="change the colour theme" class="ml-4 nav-item">
       <img
         class="md:hover:scale-[1.1] ease-primary duration-primary"
         src="/images/icons/theme-button.svg"
@@ -21,11 +21,19 @@ import NavItem from "../NavBar/NavItem.astro";
     </button>
   </div>
   <div class="gap-4 items-center md:flex hidden">
-    <a href="">
+    <a href="" class="nav-item" aria-label="LinkedIn">
       <LinkedInIcon color="#4CFFF4" />
     </a>
-    <a href="">
+
+    <a href="" class="nav-item" aria-label="Instagram">
       <InstagramIcon color="#4CFFF4" />
     </a>
   </div>
 </header>
+
+<style>
+  .nav-item {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+</style>

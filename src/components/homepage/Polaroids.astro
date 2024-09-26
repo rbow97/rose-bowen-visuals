@@ -3,7 +3,7 @@ import Image from "../Image.astro";
 
 const images = [
   { src: "/images/me/purple-rose.png", caption: "Serving" },
-  { src: "/images/me/rose-and-jenny.png", caption: "My beautiful gf" },
+  { src: "/images/me/rose-and-jenny.png", caption: "Me and my beautiful gf" },
   { src: "/images/me/rose-in-edinburgh.png", caption: "On top of the world!!" },
   { src: "/images/me/rose-and-catherine.png", caption: "Me and Catherine" },
 ];
@@ -31,7 +31,7 @@ const rotations = [
             caption={image.caption}
             class="w-full h-full object-cover"
           />
-          <div class="absolute h-[20px] md:h-[52px] bottom-0 left-0 right-0 text-primary-white font-semibold text-[10px] md:text-[20px] flex items-center justify-center p-2 md:p-4 transition-opacity duration-300">
+          <div class="absolute h-[20px] md:h-[52px] bottom-0 left-0 right-0 text-primary-white font-semibold text-[10px] md:text-[14px] flex items-center justify-center p-2 md:p-4 transition-opacity duration-300">
             <p class="reveal-animation overflow-hidden whitespace-nowrap">
               {image.caption}
             </p>
