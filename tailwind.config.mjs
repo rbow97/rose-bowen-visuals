@@ -13,6 +13,7 @@ export default {
         peach: "#FFBFC3",
         blue: "#4CFFF4",
         white: "#FFFFFF",
+        black: "#000000",
         purple: "#5B16FF",
       },
     },

@@ -1,0 +1,29 @@
+---
+import { ArrowIcon } from "./ArrowIcon";
+
+const { src, caption, href } = Astro.props;
+---
+
+<a target="_blank" href={href} class="relative group h-full">
+  <video
+    autoplay
+    loop
+    muted
+    playsinline
+    class="object-cover max-h-[200px] md:max-h-[500px] w-full object-center rounded-xl md:rounded-lg"
+  >
+    <source src={src} type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+  <div
+    class="bg-primary-blue md:px-5 p-4 md:py-6 rounded-l-xl rounded-r-[40px] mt-3 md:mt-0 absolute bottom-6 left-6 flex items-center justify-between duration-secondary transition-[width] ease-primary w-2/3 gap-4 md:right-6 min-w-[180px] md:min-w-fit max-w-[calc(100%_-_48px)] md:w-1/4 md:group-hover:w-[calc(100%_-_48px)]"
+  >
+    <h3
+      class="text-primary-black font-medium text-[18px] md:text-[24px] truncate"
+    >
+      {caption}
+    </h3>
+    <!-- <img width="24" class="w-6 md:w-9" src="/images/icons/arrow.svg" /> -->
+    <ArrowIcon />
+  </div>
+</a>
