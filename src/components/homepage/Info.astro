@@ -11,7 +11,7 @@ const infoTexts = [
 ];
 ---
 
-<section aria-label="About me" id="about-me">
+<section aria-label="info" id="info">
   <Container>
     <Grid>
       <div
@@ -55,7 +55,7 @@ const infoTexts = [
   gsap.registerPlugin(ScrollTrigger);
 
   function setupInfoAnimation() {
-    const infoSection: HTMLDivElement = document.querySelector("#about-me")!;
+    const infoSection: HTMLDivElement = document.querySelector("#info")!;
     const infoTextContainer: HTMLDivElement = infoSection?.querySelector(
       ".info-text-container"
     )!;

@@ -11,8 +11,8 @@ import NavItem from "../NavBar/NavItem.astro";
   <div class="w-full flex items-center md:justify-start justify-between">
     <NavBar>
       <NavItem> Rose Bowen </NavItem>
-      <NavItem href="/#about-me"> About me </NavItem>
-      <NavItem href="/#my-work"> My work </NavItem>
+      <NavItem href="/#info"> Info </NavItem>
+      <NavItem href="/#work"> Work </NavItem>
     </NavBar>
     <button
       aria-label="Change the colour theme"
@@ -49,8 +49,6 @@ import NavItem from "../NavBar/NavItem.astro";
 </style>
 
 <script>
-  import { isLoading } from "../../stores/loadingStore";
-
   function animateNavItems() {
     const navItems = document.querySelectorAll(".nav-item");
     navItems.forEach((item, index) => {
@@ -70,8 +68,7 @@ import NavItem from "../NavBar/NavItem.astro";
   }
 
   function handleScroll() {
-    const themeButtonImg: HTMLImageElement =
-      document.querySelector(".theme-button img")!;
+    const themeButtonImg = document.querySelector(".theme-button img");
     if (themeButtonImg) {
       const scrollPercentage =
         window.scrollY /
@@ -81,21 +78,23 @@ import NavItem from "../NavBar/NavItem.astro";
     }
   }
 
-  isLoading.subscribe((loading: boolean) => {
-    if (!loading) {
-      animateNavItems();
-      window.addEventListener("scroll", handleScroll);
-
-      const themeButtonImg: HTMLImageElement =
-        document.querySelector(".theme-button img")!;
-      if (themeButtonImg) {
-        themeButtonImg.addEventListener("mouseenter", () =>
-          themeButtonImg.classList.add("hover")
-        );
-        themeButtonImg.addEventListener("mouseleave", () =>
-          themeButtonImg.classList.remove("hover")
-        );
-      }
+  function setupThemeButtonHover() {
+    const themeButtonImg = document.querySelector(".theme-button img");
+    if (themeButtonImg) {
+      themeButtonImg.addEventListener("mouseenter", () =>
+        themeButtonImg.classList.add("hover")
+      );
+      themeButtonImg.addEventListener("mouseleave", () =>
+        themeButtonImg.classList.remove("hover")
+      );
     }
+  }
+
+  window.addEventListener("scroll", handleScroll);
+
+  // Listen for the loadingComplete event
+  document.addEventListener("loadingComplete", () => {
+    animateNavItems();
+    setupThemeButtonHover();
   });
 </script>

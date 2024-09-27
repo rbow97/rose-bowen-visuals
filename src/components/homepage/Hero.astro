@@ -26,16 +26,10 @@
 </style>
 
 <script>
-  import { isLoading, hasAnimatedHero } from "../../stores/loadingStore";
-
-  isLoading.subscribe((loading: boolean) => {
-    if (!loading) {
-      animateInHeading();
-    }
-  });
+  let hasAnimatedHero = false;
 
   function animateInHeading() {
-    if (hasAnimatedHero.get()) return; // Skip if already animated
+    if (hasAnimatedHero) return; // Skip if already animated
 
     const heroTitle = document.getElementById("hero-title");
     if (!heroTitle) return;
@@ -72,9 +66,9 @@
       );
     });
 
-    hasAnimatedHero.set(true); // Set the flag after animation
-
-    // Dispatch a custom event to trigger nav items animation
-    document.dispatchEvent(new CustomEvent("animateNavItems"));
+    hasAnimatedHero = true; // Set the flag after animation
   }
+
+  // Listen for the loadingComplete event
+  document.addEventListener("loadingComplete", animateInHeading);
 </script>

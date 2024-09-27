@@ -18,7 +18,7 @@ const workItems: WorkItemsProps[] = [
     description:
       "I'm an independent design agency partnering with those making a positive difference in the world.",
     videoUrl: "/videos/3d-worlds-website.mp4",
-    href: "/my-work/cuckoo-broadband",
+    href: "/work/cuckoo-broadband",
     caption: "Cuckoo broadband",
     buttonText: "Cuckoo broadband",
   },
@@ -27,7 +27,7 @@ const workItems: WorkItemsProps[] = [
     description:
       "I'm an independent design agency partnering with those making a positive difference in the world.",
     videoUrl: "/videos/alex-hughes.mp4",
-    href: "/my-work/alex-hughes-photography",
+    href: "/work/alex-hughes-photography",
     caption: "Alex Hughes photography",
     buttonText: "Alex Hughes photography",
   },
@@ -36,7 +36,7 @@ const workItems: WorkItemsProps[] = [
     description:
       "I'm an independent design agency partnering with those making a positive difference in the world.",
     videoUrl: "/videos/feature-films-featuring-vid.mp4",
-    href: "/my-work/feature-films-featuring",
+    href: "/work/feature-films-featuring",
     caption: "Feature Films Featuring",
     buttonText: "Feature Films Featuring",
   },
@@ -44,9 +44,9 @@ const workItems: WorkItemsProps[] = [
 ---
 
 <section
-  aria-label="My work"
+  aria-label="Work"
   class="bg-purple-600 pb-[50px] text-white mt-[90px] md:mt-[170px]"
-  id="my-work"
+  id="work"
 >
   <h2
     class="text-[34px] md:text-[60px] mb-[20px] md:mb-12 text-primary-blue my-work-heading"
@@ -104,7 +104,7 @@ const workItems: WorkItemsProps[] = [
   gsap.registerPlugin(ScrollTrigger);
 
   function setupMyWorkAnimation() {
-    const myWorkSection = document.querySelector("#my-work");
+    const myWorkSection = document.querySelector("#work");
     const myWorkHeading = myWorkSection?.querySelector(".my-work-heading");
     const workItems = myWorkSection?.querySelectorAll(".work-item");
 

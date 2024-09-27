@@ -87,8 +87,6 @@
 </style>
 
 <script>
-  import { isLoading } from "../stores/loadingStore";
-
   document.addEventListener("DOMContentLoaded", function () {
     const loadingOverlay = document.getElementById("loading-overlay")!;
     const body = document.body;
@@ -105,47 +103,22 @@
       setTimeout(() => {
         loadingOverlay.style.display = "none";
         body.classList.remove("loading-active");
-        isLoading.set(false);
+        // Dispatch the loadingComplete event
+        document.dispatchEvent(new Event("loadingComplete"));
       }, 500);
     }
 
-    const images: HTMLCollectionOf<HTMLImageElement> =
-      document.getElementsByTagName("img");
-    let loadedImages: number = 0;
-    let startTime: number = Date.now();
+    // Wait for the window to fully load
+    window.addEventListener("load", () => {
+      // Add a small delay to ensure smooth transition
+      setTimeout(hideLoadingOverlay, 500);
+    });
 
-    function checkAllImagesLoaded(): void {
-      if (loadedImages === images.length) {
-        const elapsedTime = Date.now() - startTime;
-        const remainingTime = Math.max(1000 - elapsedTime, 0);
-        setTimeout(hideLoadingOverlay, remainingTime);
-      }
-    }
-
-    function imageLoaded(): void {
-      loadedImages++;
-      checkAllImagesLoaded();
-    }
-
-    if (images.length === 0) {
-      // If there are no images, wait 3 seconds before hiding the overlay
-      setTimeout(hideLoadingOverlay, 3000);
-    } else {
-      for (let i: number = 0; i < images.length; i++) {
-        if (images[i].complete) {
-          imageLoaded();
-        } else {
-          images[i].addEventListener("load", imageLoaded);
-          images[i].addEventListener("error", imageLoaded);
-        }
-      }
-    }
-
-    // Fallback: Hide overlay after 10 seconds even if not all images have loaded
+    // Fallback: Hide overlay after 10 seconds even if the window hasn't fully loaded
     setTimeout(() => {
-      if (loadedImages < images.length) {
+      if (body.classList.contains("loading-active")) {
         console.warn(
-          `Not all images loaded after 10 seconds. Loaded ${loadedImages} out of ${images.length}`
+          "Window load event didn't fire after 10 seconds. Hiding overlay."
         );
         hideLoadingOverlay();
       }

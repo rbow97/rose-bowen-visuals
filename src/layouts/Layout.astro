@@ -30,12 +30,12 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <!-- <ViewTransitions /> -->
   </head>
   <body class="bg-hero bg-cover bg-no-repeat">
-    <main>
-      <Header />
-      <LoadingOverlay />
+    <LoadingOverlay />
+    <Header />
+    <!-- Overflow hidden for polaroids -->
+    <main class="overflow-x-hidden">
       <slot />
     </main>
   </body>
@@ -62,37 +62,4 @@ const { title } = Astro.props;
       Courier New,
       monospace;
   }
-
-  body {
-    opacity: 0;
-    transition: opacity 0.3s ease-in;
-  }
-
-  body.loaded {
-    opacity: 1;
-  }
 </style>
-
-<script>
-  function scrollToTop() {
-    window.scrollTo(0, 0);
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-  }
-
-  function showContent() {
-    document.body.classList.add("loaded");
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    if (history.scrollRestoration) {
-      history.scrollRestoration = "manual";
-    }
-    scrollToTop();
-    // Add a slight delay to ensure it overrides other behaviors
-    setTimeout(() => {
-      scrollToTop();
-      showContent();
-    }, 100);
-  });
-</script>

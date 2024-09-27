@@ -4,6 +4,7 @@ import NavItem from "../../components/NavBar/NavItem.astro";
 import Container from "../../components/Container.astro";
 import Grid from "../../components/Grid.astro";
 import Layout from "../../layouts/Layout.astro";
+import LoadingOverlay from "../../components/LoadingOverlay.astro";
 
 export const getStaticPaths = () => {
   const paths = [
@@ -31,7 +32,7 @@ const { title } = Astro.props;
     <Grid>
       <div class="col-span-4 md:col-span-12 mt-[120px]">
         <div class="flex items-center gap-5">
-          <a href="/#my-work" class="flex items-center">
+          <a href="/#work" class="flex items-center">
             <button aria-label="Back to home">
               <ArrowIcon color="#4CFFF4" transform="rotate(180)" />
             </button>
