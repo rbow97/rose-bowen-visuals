@@ -67,10 +67,6 @@ const images = [
   .group:hover .reveal-animation::before {
     transform: scaleX(0);
   }
-
-  .polaroid {
-    transition: z-index 0s;
-  }
 </style>
 
 <script>
@@ -126,16 +122,26 @@ const images = [
     ); // 0.5 second delay between each polaroid
   });
 
-  // Add hover event listeners for z-index
+  // Modify the hover event listeners
   polaroids.forEach((polaroid, index) => {
     const rotation = rotations[index];
 
     polaroid.addEventListener("mouseenter", () => {
-      gsap.set(polaroid, { zIndex: 10 });
+      gsap.to(polaroid, {
+        y: rotation.y - 10, // Move 10px upwards from its current position
+        zIndex: 10,
+        duration: 0.2,
+        ease: "power2.out",
+      });
     });
 
     polaroid.addEventListener("mouseleave", () => {
-      gsap.set(polaroid, { zIndex: rotation.z });
+      gsap.to(polaroid, {
+        y: rotation.y, // Return to original y position
+        zIndex: rotation.z,
+        duration: 0.2,
+        ease: "power2.out",
+      });
     });
   });
 </script>
