@@ -65,6 +65,8 @@ const menuItems = [
 </style>
 
 <script>
+  let hasAnimatedNavbar = false;
+
   function handleScroll() {
     const themeButtonImg: HTMLImageElement =
       document.querySelector(".theme-button img")!;
@@ -90,6 +92,8 @@ const menuItems = [
   }
 
   function animateMenuItems() {
+    if (hasAnimatedNavbar) return; // Skip if already animated
+
     const menuItems = document.querySelectorAll(".menu-item");
     menuItems.forEach((item, index) => {
       item.animate(
@@ -105,6 +109,8 @@ const menuItems = [
         }
       );
     });
+
+    hasAnimatedNavbar = true; // Set the flag after animation
   }
 
   window.addEventListener("scroll", handleScroll);
