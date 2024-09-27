@@ -6,12 +6,12 @@ const email = "rosebowen1997@gmail.com";
 
 const infoTexts = [
   "I'm a creative Frontend Developer with a love of making fun, fast, accessible websites.",
-  "Feel free to get in touch if you have an idea you would like brought to life :)",
+  "Feel free to get in touch if you have an idea you would like brought to life.",
   "Scroll down to see more about me!",
 ];
 ---
 
-<section aria-label="About me" id="info">
+<section aria-label="About me" id="about-me">
   <Container>
     <Grid>
       <div
@@ -55,7 +55,7 @@ const infoTexts = [
   gsap.registerPlugin(ScrollTrigger);
 
   function setupInfoAnimation() {
-    const infoSection: HTMLDivElement = document.querySelector("#info")!;
+    const infoSection: HTMLDivElement = document.querySelector("#about-me")!;
     const infoTextContainer: HTMLDivElement = infoSection?.querySelector(
       ".info-text-container"
     )!;

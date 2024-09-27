@@ -1,0 +1,60 @@
+---
+import { ArrowIcon } from "../../components/ArrowIcon";
+import NavItem from "../../components/NavBar/NavItem.astro";
+import Container from "../../components/Container.astro";
+import Grid from "../../components/Grid.astro";
+import Layout from "../../layouts/Layout.astro";
+
+export const getStaticPaths = () => {
+  const paths = [
+    {
+      params: { path: "cuckoo-broadband" },
+      props: { title: "Cuckoo Broadband" },
+    },
+    {
+      params: { path: "alex-hughes-photography" },
+      props: { title: "Alex Hughes Photography" },
+    },
+    {
+      params: { path: "feature-films-featuring" },
+      props: { title: "Feature Films Featuring" },
+    },
+  ];
+  return paths;
+};
+
+const { title } = Astro.props;
+---
+
+<Layout title="Rose Bowen Visuals">
+  <Container>
+    <Grid>
+      <div class="col-span-4 md:col-span-12 mt-[120px]">
+        <div class="flex items-center gap-5">
+          <a href="/#my-work" class="flex items-center">
+            <button aria-label="Back to home">
+              <ArrowIcon color="#4CFFF4" transform="rotate(180)" />
+            </button>
+          </a>
+          <h1 class="text-[60px] text-primary-blue">{title}</h1>
+        </div>
+      </div>
+      <div
+        class="col-span-8 md:col-span-8 [&>p]:text-[30px] [&>p]:text-primary-blue [&>p]:leading-[110%] [&>p]:mt-10"
+      >
+        <p>
+          Now as I was young and easy under the apple boughs about the lilting
+          house and happy as the grass was green, the night above the dingle
+          starry, time let me hail and climb golden in the heydays of his eyes.
+        </p>
+        <br />
+        <p class="mb-10">
+          And honoured among wagons I was prince of the apple towns and once
+          below a time I lordly had the trees and leaves trail with daisies and
+          barley down the rivers of the windfall light.
+        </p>
+        <NavItem href="https://cuckoo.co">Visit website</NavItem>
+      </div>
+    </Grid>
+  </Container>
+</Layout>

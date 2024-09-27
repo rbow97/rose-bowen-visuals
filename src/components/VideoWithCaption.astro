@@ -4,7 +4,7 @@ import { ArrowIcon } from "./ArrowIcon";
 const { src, caption, href } = Astro.props;
 ---
 
-<a target="_blank" href={href} class="relative group h-full">
+<a href={href} class="relative group h-full">
   <video
     autoplay
     loop
@@ -23,7 +23,6 @@ const { src, caption, href } = Astro.props;
     >
       {caption}
     </h3>
-    <!-- <img width="24" class="w-6 md:w-9" src="/images/icons/arrow.svg" /> -->
     <ArrowIcon />
   </div>
 </a>

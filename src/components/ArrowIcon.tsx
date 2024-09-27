@@ -2,14 +2,16 @@ import type React from "preact/compat";
 
 interface ArrowIconProps {
   color?: string;
+  transform?: string;
   className?: string;
 }
 
 export function ArrowIcon(props: ArrowIconProps): React.ReactNode {
-  const { color = "currentColor", className = "" } = props;
+  const { color = "currentColor", transform = "", className = "" } = props;
 
   return (
     <svg
+      transform={transform}
       width="40"
       height="29"
       viewBox="0 0 40 29"
