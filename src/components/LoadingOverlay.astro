@@ -87,6 +87,8 @@
 </style>
 
 <script>
+  import { isLoading } from "../stores/loadingStore";
+
   document.addEventListener("DOMContentLoaded", function () {
     const loadingOverlay = document.getElementById("loading-overlay")!;
     const body = document.body;
@@ -103,8 +105,7 @@
       setTimeout(() => {
         loadingOverlay.style.display = "none";
         body.classList.remove("loading-active");
-        // Dispatch a custom event when the loading overlay is hidden
-        window.dispatchEvent(new CustomEvent("loadingOverlayHidden"));
+        isLoading.set(false);
       }, 500);
     }
 
@@ -116,7 +117,7 @@
     function checkAllImagesLoaded(): void {
       if (loadedImages === images.length) {
         const elapsedTime = Date.now() - startTime;
-        const remainingTime = Math.max(3000 - elapsedTime, 0);
+        const remainingTime = Math.max(1000 - elapsedTime, 0);
         setTimeout(hideLoadingOverlay, remainingTime);
       }
     }

@@ -7,7 +7,7 @@ import Grid from "../Grid.astro";
   <Container>
     <Grid>
       <div
-        class="col-span-4 md:col-span-7 pt-[56px] md:pt-[80px] leading-10 [&_*]:text-primary-blue info-text-container"
+        class="col-span-4 md:col-span-7 md:mt-[80px] leading-10 [&_*]:text-primary-blue info-text-container -mt-40"
       >
         <p class="text-[24px] md:text-[40px] leading-[110%] info-text">
           I'm a creative Frontend Developer with a love of making fun, fast,
@@ -35,94 +35,50 @@ import Grid from "../Grid.astro";
     display: flex;
     flex-direction: column;
     gap: 1rem;
-  }
-
-  .info-text {
     opacity: 0;
-    white-space: normal;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    transform: translateY(50px);
   }
 </style>
 
 <script>
-  function animateText(element: HTMLElement): Promise<void> {
-    return new Promise((resolve) => {
-      // This extracts the text content from the element, clears the element's HTML, and sets its opacity to 1.
-      const text: string = element.textContent || "";
-      element.innerHTML = "";
-      element.style.opacity = "1";
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-      // This splits the text into words and filters out any empty words.
-      const words: string[] = text
-        .split(" ")
-        .filter((word) => word.trim() !== "");
-      words.forEach((word: string, wordIndex: number) => {
-        const wordSpan: HTMLSpanElement = document.createElement("span");
-        wordSpan.style.display = "inline-block";
+  gsap.registerPlugin(ScrollTrigger);
 
-        // Character animation logic
-        [...word].forEach((char: string, charIndex: number) => {
-          if (char.trim() !== "") {
-            // This creates a span for each character, sets initial styles, and applies an animation to fade in and move up.
-            const span: HTMLSpanElement = document.createElement("span");
-            span.textContent = char;
-            span.style.opacity = "0";
-            span.style.display = "inline-block";
-            span.style.transform = "translateY(20px)";
-            wordSpan.appendChild(span);
+  function setupInfoAnimation() {
+    const infoSection: HTMLDivElement = document.querySelector("#info")!;
+    const infoTextContainer: HTMLDivElement = infoSection?.querySelector(
+      ".info-text-container"
+    )!;
+    const infoTexts: NodeListOf<HTMLParagraphElement> =
+      infoSection?.querySelectorAll(".info-text")!;
 
-            const delay: number = wordIndex * 60 + charIndex * 20;
-            span.animate(
-              [
-                { opacity: 0, transform: "translateY(20px)" },
-                { opacity: 1, transform: "translateY(0)" },
-              ],
-              {
-                duration: 4000,
-                easing: "cubic-bezier(.16,1,.3,1)",
-                fill: "forwards",
-                delay: delay,
-              }
-            );
-          }
-        });
+    if (!infoSection || !infoTextContainer || !infoTexts) return;
 
-        // Append the word span to the element and add a space if it's not the last word.
-        if (wordSpan.childNodes.length > 0) {
-          element.appendChild(wordSpan);
-          if (wordIndex < words.length - 1) {
-            element.appendChild(document.createTextNode(" "));
-          }
-        }
-      });
-
-      setTimeout(resolve, words.length * 50 + 1000 + 200);
-    });
+    // Container and text animation
+    gsap.fromTo(
+      [infoTextContainer, ...infoTexts],
+      {
+        opacity: 0,
+        y: 50,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power2.out",
+        stagger: 0.2, // Slight stagger between container and paragraphs
+        scrollTrigger: {
+          trigger: infoSection,
+          start: "top 80%",
+          end: "top 20%",
+          scrub: 1,
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
   }
 
-  async function animateInfoTexts(): Promise<void> {
-    const infoTexts: NodeListOf<HTMLElement> =
-      document.querySelectorAll(".info-text");
-    for (const element of infoTexts) {
-      await animateText(element);
-    }
-  }
-
-  const observer: IntersectionObserver = new IntersectionObserver(
-    (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry: IntersectionObserverEntry) => {
-        if (entry.isIntersecting) {
-          animateInfoTexts();
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
-
-  const infoSection: HTMLElement | null = document.querySelector("#info");
-  if (infoSection) {
-    observer.observe(infoSection);
-  }
+  document.addEventListener("DOMContentLoaded", setupInfoAnimation);
 </script>

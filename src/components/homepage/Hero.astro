@@ -3,11 +3,11 @@ import Header from "./Header.astro";
 ---
 
 <section
-  class="col-span-4 md:col-span-12 flex justify-center md:justify-end flex-col gap-[50px] md:gap-[120px] h-[calc(100dvh)]"
+  class="col-span-4 md:col-span-12 flex justify-center md:justify-end flex-col gap-[50px] md:gap-[120px] h-[100dvh]"
 >
   <Header />
   <h1
-    class="[&>span]:text-primary-blue w-full text-hero text-center"
+    class="[&>span]:text-primary-blue w-full text-hero text-center leading-[110%]"
     id="hero-title"
   >
     Rose Bowen
@@ -27,7 +27,11 @@ import Header from "./Header.astro";
 </style>
 
 <script>
+  import { isLoading, hasAnimatedHero } from "../../stores/loadingStore";
+
   function animateHeroTitle() {
+    if (hasAnimatedHero.get()) return; // Skip if already animated
+
     const heroTitle = document.getElementById("hero-title");
     if (!heroTitle) return;
 
@@ -64,6 +68,7 @@ import Header from "./Header.astro";
       );
     });
 
+    hasAnimatedHero.set(true); // Set the flag after animation
     setTimeout(animateNavItems, totalDuration);
   }
 
@@ -85,5 +90,9 @@ import Header from "./Header.astro";
     });
   }
 
-  window.addEventListener("loadingOverlayHidden", animateHeroTitle);
+  isLoading.subscribe((loading: boolean) => {
+    if (!loading) {
+      animateHeroTitle();
+    }
+  });
 </script>
