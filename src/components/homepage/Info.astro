@@ -1,6 +1,14 @@
 ---
 import Container from "../Container.astro";
 import Grid from "../Grid.astro";
+
+const email = "rosebowen1997@gmail.com";
+
+const infoTexts = [
+  "I'm a creative Frontend Developer with a love of making fun, fast, accessible websites.",
+  "Feel free to get in touch if you have an idea you would like brought to life :)",
+  "Scroll down to see more about me!",
+];
 ---
 
 <section aria-label="About me" id="info">
@@ -9,20 +17,20 @@ import Grid from "../Grid.astro";
       <div
         class="col-span-4 md:col-span-7 md:mt-[80px] leading-10 [&_*]:text-primary-blue info-text-container -mt-40"
       >
-        <p class="text-[24px] md:text-[40px] leading-[110%] info-text">
-          I'm a creative Frontend Developer with a love of making fun, fast,
-          accessible websites.
-        </p>
-        <p class="text-[24px] md:text-[40px] leading-[110%] info-text">
-          Feel free to get in touch if you have an idea you would like brought
-          to life :)
-        </p>
-        <p class="text-[24px] md:text-[40px] leading-[110%] info-text">
-          Scroll down to see more about me!
-        </p>
+        {
+          infoTexts.map((info) => {
+            return (
+              <p class="text-[24px] md:text-[40px] leading-[110%] info-text">
+                {info}
+              </p>
+            );
+          })
+        }
+
         <p class="text-[16px] md:text-[24px] leading-[110%] info-text">
-          Email me <span class="underline underline-offset-8"
-            >rosebowen1997@gmail.com</span
+          Email me <a
+            href={`mailto:${email}`}
+            class="underline underline-offset-8">{email}</a
           >
         </p>
       </div>

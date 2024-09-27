@@ -56,11 +56,37 @@ const { title } = Astro.props;
       Courier New,
       monospace;
   }
+
+  body {
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+  }
+
+  body.loaded {
+    opacity: 1;
+  }
 </style>
 
 <script>
-  if (history.scrollRestoration) {
-    history.scrollRestoration = "manual";
+  function scrollToTop() {
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   }
-  window.scrollTo(0, 0);
+
+  function showContent() {
+    document.body.classList.add("loaded");
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    if (history.scrollRestoration) {
+      history.scrollRestoration = "manual";
+    }
+    scrollToTop();
+    // Add a slight delay to ensure it overrides other behaviors
+    setTimeout(() => {
+      scrollToTop();
+      showContent();
+    }, 100);
+  });
 </script>
