@@ -1,11 +1,10 @@
 ---
-import Header from "./Header.astro";
+
 ---
 
 <section
-  class="col-span-4 md:col-span-12 flex justify-center md:justify-end flex-col gap-[50px] md:gap-[120px] h-[100dvh]"
+  class="col-span-4 md:col-span-12 flex justify-center md:justify-end flex-col gap-[50px] md:gap-[120px] h-[calc(100dvh_-_80px)]"
 >
-  <Header />
   <h1
     class="[&>span]:text-primary-blue w-full text-hero text-center leading-[110%]"
     id="hero-title"
@@ -29,7 +28,13 @@ import Header from "./Header.astro";
 <script>
   import { isLoading, hasAnimatedHero } from "../../stores/loadingStore";
 
-  function animateHeroTitle() {
+  isLoading.subscribe((loading: boolean) => {
+    if (!loading) {
+      animateInHeading();
+    }
+  });
+
+  function animateInHeading() {
     if (hasAnimatedHero.get()) return; // Skip if already animated
 
     const heroTitle = document.getElementById("hero-title");
@@ -51,7 +56,6 @@ import Header from "./Header.astro";
 
     const animationDuration = 3000;
     const delayBetweenLetters = 60;
-    const totalDuration = (letters.length - 1) * delayBetweenLetters;
 
     letters.forEach((span, index) => {
       span.animate(
@@ -69,30 +73,8 @@ import Header from "./Header.astro";
     });
 
     hasAnimatedHero.set(true); // Set the flag after animation
-    setTimeout(animateNavItems, totalDuration);
-  }
 
-  function animateNavItems() {
-    const navItems = document.querySelectorAll(".nav-item");
-    navItems.forEach((item, index) => {
-      item.animate(
-        [
-          { opacity: 0, transform: "translateY(-20px)" },
-          { opacity: 1, transform: "translateY(0)" },
-        ],
-        {
-          duration: 3000,
-          easing: "cubic-bezier(.16,1,.3,1)",
-          fill: "forwards",
-          delay: index * 100,
-        }
-      );
-    });
+    // Dispatch a custom event to trigger nav items animation
+    document.dispatchEvent(new CustomEvent("animateNavItems"));
   }
-
-  isLoading.subscribe((loading: boolean) => {
-    if (!loading) {
-      animateHeroTitle();
-    }
-  });
 </script>

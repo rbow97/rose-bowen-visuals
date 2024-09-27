@@ -6,18 +6,18 @@ import NavItem from "../NavBar/NavItem.astro";
 ---
 
 <header
-  class="absolute top-0 w-[calc(100%_-_32px)] left-4 right-4 flex justify-between mt-4 md:mt-8"
+  class="sticky z-20 top-0 pt-4 md:pt-8 w-[calc(100%_-_40px)] left-5 right-5 flex justify-between"
 >
   <div class="w-full flex items-center md:justify-start justify-between">
     <NavBar>
       <NavItem> Rose Bowen </NavItem>
       <NavItem href="/#info"> Info </NavItem>
     </NavBar>
-    <button aria-label="change the colour theme" class="ml-4 nav-item">
-      <img
-        class="md:hover:scale-[1.1] ease-primary duration-primary"
-        src="/images/icons/theme-button.svg"
-      />
+    <button
+      aria-label="Change the colour theme"
+      class="ml-4 nav-item theme-button"
+    >
+      <img src="/images/icons/theme-button.svg" />
     </button>
   </div>
   <div class="gap-4 items-center md:flex hidden">
@@ -36,4 +36,65 @@ import NavItem from "../NavBar/NavItem.astro";
     opacity: 0;
     transform: translateY(-20px);
   }
+
+  .theme-button img {
+    transition: transform 0.3s ease;
+    transform: rotate(var(--rotation, 0deg));
+  }
+
+  .theme-button img.hover {
+    transform: rotate(var(--rotation, 0deg)) scale(1.1);
+  }
 </style>
+
+<script>
+  import { isLoading } from "../../stores/loadingStore";
+
+  function animateNavItems() {
+    const navItems = document.querySelectorAll(".nav-item");
+    navItems.forEach((item, index) => {
+      item.animate(
+        [
+          { opacity: 0, transform: "translateY(-20px)" },
+          { opacity: 1, transform: "translateY(0)" },
+        ],
+        {
+          duration: 3000,
+          easing: "cubic-bezier(.16,1,.3,1)",
+          fill: "forwards",
+          delay: index * 100,
+        }
+      );
+    });
+  }
+
+  function handleScroll() {
+    const themeButtonImg: HTMLImageElement =
+      document.querySelector(".theme-button img")!;
+    if (themeButtonImg) {
+      const scrollPercentage =
+        window.scrollY /
+        (document.documentElement.scrollHeight - window.innerHeight);
+      const rotation = scrollPercentage * 360;
+      themeButtonImg.style.setProperty("--rotation", `${rotation}deg`);
+    }
+  }
+
+  isLoading.subscribe((loading: boolean) => {
+    if (!loading) {
+      animateNavItems();
+      window.addEventListener("scroll", handleScroll);
+
+      const themeButtonImg: HTMLImageElement =
+        document.querySelector(".theme-button img")!;
+      if (themeButtonImg) {
+        themeButtonImg.addEventListener("mouseenter", () =>
+          themeButtonImg.classList.add("hover")
+        );
+        themeButtonImg.addEventListener("mouseleave", () =>
+          themeButtonImg.classList.remove("hover")
+        );
+      }
+    }
+  });
+</script>

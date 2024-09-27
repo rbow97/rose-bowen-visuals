@@ -14,7 +14,7 @@ const images = [
 
 <section aria-label="polaroids" id="polaroids">
   <div
-    class="flex md:h-[calc(1.4*33vw)] h-[calc(1.7*50vw)] pb-[40px] mt-[20px] items-end justify-center md:max-w-[calc(100%_-_40px)] md:mx-auto lg:max-w-7xl lg:px-[20px] -mx-20"
+    class="flex md:h-[calc(1.5*33vw)] h-[calc(1.7*50vw)] pb-[40px] mt-[20px] items-end justify-center md:max-w-[calc(100%_-_40px)] md:mx-auto lg:max-w-7xl lg:px-[20px] -mx-20"
   >
     {
       images.map((image, index) => (
@@ -75,73 +75,81 @@ const images = [
 
   gsap.registerPlugin(ScrollTrigger);
 
-  const polaroids = document.querySelectorAll(".polaroid");
-  const isMobile = window.innerWidth < 768;
+  function initializeAnimations() {
+    const polaroids = document.querySelectorAll(".polaroid");
+    const isMobile = window.innerWidth < 768;
 
-  const rotations = [
-    { rotate: -9, x: 16, y: -16, z: 1 },
-    { rotate: 0, x: 0, y: 0, z: 2 },
-    { rotate: 9, x: -24, y: isMobile ? -64 : -128, z: 1 },
-    { rotate: -4, x: -40, y: 0, z: 2 },
-  ];
+    const rotations = [
+      { rotate: -9, x: 16, y: -16, z: 1 },
+      { rotate: 0, x: 0, y: 0, z: 2 },
+      { rotate: 9, x: -24, y: isMobile ? -64 : -128, z: 1 },
+      { rotate: -4, x: -40, y: 0, z: 2 },
+    ];
 
-  // Set initial state for all polaroids
-  polaroids.forEach((polaroid, index) => {
-    const rotation = rotations[index];
-    gsap.set(polaroid, {
-      rotation: rotation.rotate,
-      x: rotation.x,
-      y: 50, // Start below the viewport
-      zIndex: rotation.z,
-      opacity: 0,
-    });
-  });
-
-  // Create a timeline for the entrance animations
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: "#polaroids",
-      start: "top 70%",
-      end: "bottom 20%",
-      toggleActions: "play none none none",
-    },
-  });
-
-  // Add each polaroid to the timeline
-  polaroids.forEach((polaroid, index) => {
-    const rotation = rotations[index];
-    tl.to(
-      polaroid,
-      {
-        y: rotation.y, // Animate to final y position
-        opacity: 1,
-        duration: 1,
-        ease: "power3.out",
-      },
-      index * 0.5
-    ); // 0.5 second delay between each polaroid
-  });
-
-  // Modify the hover event listeners
-  polaroids.forEach((polaroid, index) => {
-    const rotation = rotations[index];
-
-    polaroid.addEventListener("mouseenter", () => {
-      gsap.to(polaroid, {
-        y: rotation.y - 10, // Move 10px upwards from its current position
-        zIndex: 10,
-        duration: 0.2,
-        ease: "power2.out",
-      });
-    });
-
-    polaroid.addEventListener("mouseleave", () => {
-      gsap.to(polaroid, {
-        y: rotation.y, // Return to original y position
+    // Reset and set initial state for all polaroids
+    polaroids.forEach((polaroid, index) => {
+      const rotation = rotations[index];
+      gsap.set(polaroid, {
+        rotation: rotation.rotate,
+        x: rotation.x,
+        y: 50, // Start below the viewport
         zIndex: rotation.z,
-        duration: 0.2,
-        ease: "power2.out",
+        opacity: 0,
       });
     });
-  });
+
+    // Create a timeline for the entrance animations
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#polaroids",
+        start: "top 70%",
+        end: "bottom 20%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    // Add each polaroid to the timeline
+    polaroids.forEach((polaroid, index) => {
+      const rotation = rotations[index];
+      tl.to(
+        polaroid,
+        {
+          y: rotation.y, // Animate to final y position
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+        },
+        index * 0.5
+      ); // 0.5 second delay between each polaroid
+    });
+
+    // Modify the hover event listeners
+    polaroids.forEach((polaroid, index) => {
+      const rotation = rotations[index];
+
+      polaroid.addEventListener("mouseenter", () => {
+        gsap.to(polaroid, {
+          y: rotation.y - 10, // Move 10px upwards from its current position
+          zIndex: 10,
+          duration: 0.2,
+          ease: "cubic-bezier(.16,1,.3,1)",
+        });
+      });
+
+      polaroid.addEventListener("mouseleave", () => {
+        gsap.to(polaroid, {
+          y: rotation.y, // Return to original y position
+          zIndex: rotation.z,
+          duration: 0.3,
+          ease: "cubic-bezier(.16,1,.3,1)",
+        });
+      });
+    });
+  }
+
+  // Run the initialization function when the DOM is ready
+  document.addEventListener("DOMContentLoaded", initializeAnimations);
+
+  // Re-run the initialization when the page is shown (e.g., after navigation)
+  document.addEventListener("astro:page-load", initializeAnimations);
 </script>
