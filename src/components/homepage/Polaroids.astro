@@ -1,5 +1,5 @@
 ---
-import Image from "../Image.astro";
+import { Image } from "astro:assets";
 
 const images = [
   { src: "/images/me/purple-rose.JPG", caption: "Serving" },
@@ -25,8 +25,9 @@ const images = [
           <div class="p-1.5 md:p-4 pb-[20px] md:pb-[52px] h-full relative">
             <Image
               src={image.src}
-              href="/"
-              caption={image.caption}
+              alt={image.caption}
+              width="340"
+              height="340"
               class="w-full h-full object-cover"
             />
             <div class="absolute h-[20px] md:h-[52px] bottom-0 left-0 right-0 text-primary-white font-semibold text-[10px] md:text-[14px] flex items-center justify-center p-2 md:p-4 transition-opacity duration-300">

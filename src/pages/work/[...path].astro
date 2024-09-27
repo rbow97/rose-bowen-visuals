@@ -1,60 +1,244 @@
 ---
+import { Image } from "astro:assets";
 import { ArrowIcon } from "../../components/ArrowIcon";
-import NavItem from "../../components/NavBar/NavItem.astro";
+import Button from "../../components/Button.astro";
 import Container from "../../components/Container.astro";
 import Grid from "../../components/Grid.astro";
+import { TextSpan } from "../../components/TextSpan";
+import VideoWithCaption from "../../components/VideoWithCaption.astro";
 import Layout from "../../layouts/Layout.astro";
-import LoadingOverlay from "../../components/LoadingOverlay.astro";
 
 export const getStaticPaths = () => {
   const paths = [
     {
-      params: { path: "cuckoo-broadband" },
-      props: { title: "Cuckoo Broadband" },
+      params: { path: "cuckoo-fibre" },
+      props: {
+        title: "Cuckoo Fibre",
+        paragraphs: [
+          [
+            {
+              text: "As a frontend engineer, I was heavily involved in the company’s rebranding, where we rebuilt the entire website using tools like ",
+              format: "normal",
+            },
+            { text: "TailwindCSS", format: "highlight" },
+            { text: ", ", format: "normal" },
+            { text: "Next.js ", format: "highlight" },
+            { text: "and ", format: "normal" },
+            { text: "Lottie animations.", format: "highlight" },
+            {
+              text: " Working alongside different teams, I helped create a  ",
+              format: "normal",
+            },
+            { text: "design system ", format: "highlight" },
+            {
+              text: "with reusable components that look great on all screen sizes.",
+              format: "normal",
+            },
+          ],
+          [
+            {
+              text: "One of the key projects I worked on was improving the customer  , ",
+              format: "normal",
+            },
+            {
+              text: "sign-up journey. ",
+              format: "highlight",
+            },
+            {
+              text: "I focused on making it",
+              format: "normal",
+            },
+            {
+              text: "accessible  ",
+              format: "highlight",
+            },
+            {
+              text: "and ",
+              format: "normal",
+            },
+            {
+              text: "easy to use for everyone ",
+              format: "highlight",
+            },
+            {
+              text: "using progressive enhancement to ensure it worked well even under less-than-ideal conditions.",
+              format: "normal",
+            },
+          ],
+          [
+            {
+              text: "I also added some fun animations to make the site more engaging and enjoyable for users 🤩",
+              format: "normal",
+            },
+          ],
+        ],
+        websiteUrl: "https://cuckoo.co",
+        media: [
+          {
+            src: "/videos/3d-worlds-website.mp4",
+            alt: "Cuckoo world",
+            type: "video",
+          },
+          {
+            src: "/images/cuckoo-switching-image.jpeg",
+            alt: "Cuckoo switching",
+            type: "image",
+          },
+          {
+            src: "/videos/login.mp4",
+            alt: "Cuckoo login",
+            type: "video",
+          },
+        ],
+      },
     },
     {
       params: { path: "alex-hughes-photography" },
-      props: { title: "Alex Hughes Photography" },
+      props: {
+        title: "Alex Hughes Photography",
+        paragraphs: [
+          [
+            { text: "Now as I was ", format: "normal" },
+            { text: "young and easy", format: "bold" },
+            {
+              text: " under the apple boughs about the lilting house and ",
+              format: "normal",
+            },
+            { text: "happy as the grass was green", format: "highlight" },
+            {
+              text: ", the night above the dingle starry, time let me hail and climb golden in the heydays of his eyes.",
+              format: "normal",
+            },
+          ],
+          [
+            { text: "And honoured among wagons I was ", format: "normal" },
+            { text: "prince of the apple towns", format: "bold" },
+            {
+              text: " and once below a time I lordly had the trees and leaves trail with daisies and barley down the rivers of the windfall light.",
+              format: "normal",
+            },
+          ],
+        ],
+        websiteUrl: "https://cuckoo.co",
+        media: [
+          {
+            src: "../../videos/login.mp4",
+            alt: "Cuckoo login",
+            type: "video",
+          },
+          {
+            src: "/images/my-work/feature-films-featuring.png",
+            alt: "Feature Films Featuring",
+            type: "image",
+          },
+        ],
+      },
     },
     {
       params: { path: "feature-films-featuring" },
-      props: { title: "Feature Films Featuring" },
+      props: {
+        title: "Feature Films Featuring",
+        paragraphs: [
+          [
+            { text: "Now as I was ", format: "normal" },
+            { text: "young and easy", format: "bold" },
+            {
+              text: " under the apple boughs about the lilting house and ",
+              format: "normal",
+            },
+            { text: "happy as the grass was green", format: "highlight" },
+            {
+              text: ", the night above the dingle starry, time let me hail and climb golden in the heydays of his eyes.",
+              format: "normal",
+            },
+          ],
+          [
+            { text: "And honoured among wagons I was ", format: "normal" },
+            { text: "prince of the apple towns", format: "bold" },
+            {
+              text: " and once below a time I lordly had the trees and leaves trail with daisies and barley down the rivers of the windfall light.",
+              format: "normal",
+            },
+          ],
+        ],
+        websiteUrl: "https://cuckoo.co",
+        media: [
+          {
+            src: "/videos/login.mp4",
+            alt: "Cuckoo login",
+            type: "video",
+          },
+          {
+            src: "../../images/cuckoo-switching-image.avif",
+            alt: "Feature Films Featuring",
+            type: "image",
+          },
+        ],
+      },
     },
   ];
   return paths;
 };
 
-const { title } = Astro.props;
+const { title, paragraphs, media, websiteUrl } = Astro.props;
 ---
 
 <Layout title="Rose Bowen Visuals">
   <Container>
     <Grid>
-      <div class="col-span-4 md:col-span-12 mt-[120px]">
+      <div class="col-span-4 md:col-span-12 mt-[80px] md:mt-[120px]">
         <div class="flex items-center gap-5">
           <a href="/#work" class="flex items-center">
             <button aria-label="Back to home">
               <ArrowIcon color="#4CFFF4" transform="rotate(180)" />
             </button>
           </a>
-          <h1 class="text-[60px] text-primary-blue">{title}</h1>
+          <h1 class="text-[36px] md:text-[60px] text-primary-blue">{title}</h1>
         </div>
       </div>
       <div
-        class="col-span-8 md:col-span-8 [&>p]:text-[30px] [&>p]:text-primary-blue [&>p]:leading-[110%] [&>p]:mt-10"
+        class="col-span-4 md:col-span-8 [&>p]:text-[16px] md:[&>p]:text-[30px] [&>p]:text-primary-blue [&>p]:leading-[110%] [&>p]:mt-6 md:[&>p]:mt-10"
       >
-        <p>
-          Now as I was young and easy under the apple boughs about the lilting
-          house and happy as the grass was green, the night above the dingle
-          starry, time let me hail and climb golden in the heydays of his eyes.
-        </p>
-        <br />
-        <p class="mb-10">
-          And honoured among wagons I was prince of the apple towns and once
-          below a time I lordly had the trees and leaves trail with daisies and
-          barley down the rivers of the windfall light.
-        </p>
-        <NavItem href="https://cuckoo.co">Visit website</NavItem>
+        {
+          paragraphs.map((paragraph) => (
+            <p class="mb-4">
+              {paragraph.map((segment: { text: string; format: string }) => (
+                <TextSpan text={segment.text} format={segment.format} />
+              ))}
+            </p>
+          ))
+        }
+      </div>
+      <div class="col-span-4 md:col-span-12 mt-[16px] md:mt-[24px]">
+        <a target="_blank" class="block w-fit" href={websiteUrl}>
+          <Button>Visit website</Button>
+        </a>
+      </div>
+      <div
+        class="col-span-4 md:col-span-12 w-full flex flex-col gap-[20px] md:gap-[50px] md:mb-[120px] mt-[52px] md:mt-[80px]"
+      >
+        {
+          media.map((media) =>
+            media.type === "video" ? (
+              <video
+                autoplay
+                loop
+                muted
+                playsinline
+                class="object-cover max-h-[500px] md:max-h-[800px] w-full object-center rounded-xl md:rounded-lg"
+              >
+                <source src={media.src} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : (
+              <img
+                class="rounded-xl md:rounded-lg"
+                src={media.src}
+                alt={media.alt}
+              />
+            )
+          )
+        }
       </div>
     </Grid>
   </Container>

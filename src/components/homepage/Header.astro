@@ -1,43 +1,54 @@
 ---
+import Button from "../Button.astro";
 import { InstagramIcon } from "../icons/InstagramIcon";
 import { LinkedInIcon } from "../icons/LinkedInIcon";
-import NavBar from "../NavBar/NavBar.astro";
-import NavItem from "../NavBar/NavItem.astro";
+
+const menuItems = [
+  { href: "/", label: "Rose Bowen" },
+  { href: "/#info", label: "Info" },
+  { href: "/#work", label: "Work" },
+];
 ---
 
 <header
   class="sticky z-20 top-0 pt-4 md:pt-8 w-[calc(100%_-_40px)] left-5 right-5 flex justify-between"
 >
   <div class="w-full flex items-center md:justify-start justify-between">
-    <NavBar>
-      <NavItem> Rose Bowen </NavItem>
-      <NavItem href="/#info"> Info </NavItem>
-      <NavItem href="/#work"> Work </NavItem>
-    </NavBar>
+    <nav>
+      <ul class="flex md:gap-4 gap-3">
+        {
+          menuItems.map((item) => (
+            <li class="menu-item">
+              <a href={item.href}>
+                <Button>{item.label}</Button>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
     <button
       aria-label="Change the colour theme"
-      class="ml-4 nav-item theme-button"
+      class="ml-4 theme-button menu-item"
     >
       <img src="/images/icons/theme-button.svg" />
     </button>
   </div>
   <div class="gap-4 items-center md:flex hidden">
-    <a href="" class="nav-item" aria-label="LinkedIn">
+    <a
+      href="https://www.linkedin.com/in/rose-bowen-867a72198/"
+      class="menu-item"
+      aria-label="LinkedIn"
+    >
       <LinkedInIcon color="#4CFFF4" />
     </a>
-
-    <a href="" class="nav-item" aria-label="Instagram">
+    <!-- <a href="" class="menu-item" aria-label="Instagram">
       <InstagramIcon color="#4CFFF4" />
-    </a>
+    </a> -->
   </div>
 </header>
 
 <style>
-  .nav-item {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-
   .theme-button img {
     transition: transform 0.3s ease;
     transform: rotate(var(--rotation, 0deg));
@@ -46,29 +57,17 @@ import NavItem from "../NavBar/NavItem.astro";
   .theme-button img.hover {
     transform: rotate(var(--rotation, 0deg)) scale(1.1);
   }
+
+  .menu-item {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
 </style>
 
 <script>
-  function animateNavItems() {
-    const navItems = document.querySelectorAll(".nav-item");
-    navItems.forEach((item, index) => {
-      item.animate(
-        [
-          { opacity: 0, transform: "translateY(-20px)" },
-          { opacity: 1, transform: "translateY(0)" },
-        ],
-        {
-          duration: 3000,
-          easing: "cubic-bezier(.16,1,.3,1)",
-          fill: "forwards",
-          delay: index * 100,
-        }
-      );
-    });
-  }
-
   function handleScroll() {
-    const themeButtonImg = document.querySelector(".theme-button img");
+    const themeButtonImg: HTMLImageElement =
+      document.querySelector(".theme-button img")!;
     if (themeButtonImg) {
       const scrollPercentage =
         window.scrollY /
@@ -90,11 +89,29 @@ import NavItem from "../NavBar/NavItem.astro";
     }
   }
 
+  function animateMenuItems() {
+    const menuItems = document.querySelectorAll(".menu-item");
+    menuItems.forEach((item, index) => {
+      item.animate(
+        [
+          { opacity: 0, transform: "translateY(-20px)" },
+          { opacity: 1, transform: "translateY(0)" },
+        ],
+        {
+          duration: 3000,
+          easing: "cubic-bezier(.16,1,.3,1)",
+          fill: "forwards",
+          delay: index * 100,
+        }
+      );
+    });
+  }
+
   window.addEventListener("scroll", handleScroll);
 
   // Listen for the loadingComplete event
   document.addEventListener("loadingComplete", () => {
-    animateNavItems();
     setupThemeButtonHover();
+    animateMenuItems();
   });
 </script>

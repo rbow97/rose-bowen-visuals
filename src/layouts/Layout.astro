@@ -1,6 +1,6 @@
 ---
-import { ViewTransitions } from "astro:transitions";
 import Header from "../components/homepage/Header.astro";
+import { LinkedInIcon } from "../components/icons/LinkedInIcon";
 import LoadingOverlay from "../components/LoadingOverlay.astro";
 
 interface Props {
@@ -37,6 +37,11 @@ const { title } = Astro.props;
     <!-- Overflow hidden for polaroids -->
     <main class="overflow-x-hidden">
       <slot />
+      <div class="mt-[140px] mb-[60px] flex md:hidden justify-center">
+        <a href="https://www.linkedin.com/in/rose-bowen-867a72198/">
+          <LinkedInIcon color="#4CFFF4" />
+        </a>
+      </div>
     </main>
   </body>
 </html>
