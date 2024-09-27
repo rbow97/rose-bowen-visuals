@@ -2,16 +2,19 @@
 import Image from "../Image.astro";
 
 const images = [
-  { src: "/images/me/purple-rose.png", caption: "Serving" },
+  { src: "/images/me/purple-rose.JPG", caption: "Serving" },
   { src: "/images/me/rose-and-jenny.png", caption: "Me and Jenny <3" },
-  { src: "/images/me/rose-in-edinburgh.png", caption: "On top of the world!!" },
-  { src: "/images/me/rose-and-catherine.png", caption: "Me and Catherine" },
+  {
+    src: "/images/me/rose-in-edinburgh.jpeg",
+    caption: "On top of the world!!",
+  },
+  { src: "/images/me/rose-and-catherine.jpeg", caption: "Me and Catherine" },
 ];
 ---
 
 <section aria-label="polaroids" id="polaroids">
   <div
-    class="flex h-[80vw] sm:h-[55vw] pb-[40px] mt-[20px] items-end justify-center md:max-w-[calc(100%_-_40px)] md:mx-auto lg:max-w-7xl lg:px-[20px] -mx-20"
+    class="flex md:h-[calc(1.4*33vw)] h-[calc(1.7*50vw)] pb-[40px] mt-[20px] items-end justify-center md:max-w-[calc(100%_-_40px)] md:mx-auto lg:max-w-7xl lg:px-[20px] -mx-20"
   >
     {
       images.map((image, index) => (
@@ -64,6 +67,10 @@ const images = [
   .group:hover .reveal-animation::before {
     transform: scaleX(0);
   }
+
+  .polaroid {
+    transition: z-index 0s;
+  }
 </style>
 
 <script>
@@ -100,7 +107,7 @@ const images = [
       trigger: "#polaroids",
       start: "top 70%",
       end: "bottom 20%",
-      toggleActions: "play none none reverse",
+      toggleActions: "play none none none",
     },
   });
 
@@ -117,5 +124,18 @@ const images = [
       },
       index * 0.5
     ); // 0.5 second delay between each polaroid
+  });
+
+  // Add hover event listeners for z-index
+  polaroids.forEach((polaroid, index) => {
+    const rotation = rotations[index];
+
+    polaroid.addEventListener("mouseenter", () => {
+      gsap.set(polaroid, { zIndex: 10 });
+    });
+
+    polaroid.addEventListener("mouseleave", () => {
+      gsap.set(polaroid, { zIndex: rotation.z });
+    });
   });
 </script>
