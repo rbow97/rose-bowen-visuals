@@ -104,11 +104,11 @@ const { title } = Astro.props;
     --text-color: #ffffff;
     --arrow-icon-color: #ffffff;
     --button-border-color: #ffffff;
-    --work-button-bg-color: #ff69b4;
+    --work-button-bg-color: #ff1ea2;
     --work-button-text-color: #ffffff;
     --button-bg-color: transparent;
     --button-text-color: #ffffff;
-    --button-hover-text-color: #ff69b4;
+    --button-hover-text-color: #ff1ea2;
     --theme-button-color: #ffffff;
     --bg-image: url("/images/backgrounds/rose-bowen-pink.png");
   }
@@ -126,37 +126,36 @@ const { title } = Astro.props;
     --bg-image: url("/images/backgrounds/rose-bowen-orange.png");
   }
 
-  /* Theme button styles */
-  .theme-button-svg {
-    transition: all 0.3s ease;
-  }
-
   .theme-button-stroke {
     stroke: var(--theme-button-color);
-    transition: all 750ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .theme-button-fill,
   .social-linkedin-fill {
     fill: var(--theme-button-color);
     stroke: var(--theme-button-color);
-    transition: all 750ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .work-button {
     background-color: var(--work-button-bg-color);
-    transition: all 750ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .work-button * {
     color: var(--work-button-text-color);
     fill: var(--work-button-text-color);
-    transition: all 750ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .arrow-icon {
     fill: var(--text-color);
-    transition: all 750ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .arrow-icon,
+  .work-button *,
+  .social-linkedin-fill,
+  .theme-button-fill,
+  .theme-button-stroke,
+  .theme-button-svg {
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   body {
@@ -165,7 +164,7 @@ const { title } = Astro.props;
     background-position: center;
     background-repeat: no-repeat;
     color: var(--text-color);
-    transition: color 750ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
   }
 
