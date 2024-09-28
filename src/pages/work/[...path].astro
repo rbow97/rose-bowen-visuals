@@ -23,6 +23,7 @@ export const getStaticPaths = () => {
             { text: "Next.js ", format: "highlight" },
             { text: "and ", format: "normal" },
             { text: "Figma.", format: "highlight" },
+            { text: ".", format: "normal" },
             {
               text: " Working alongside different teams, we set up a  ",
               format: "normal",
@@ -189,11 +190,13 @@ export const getStaticPaths = () => {
 const { title, paragraphs, media, websiteUrl } = Astro.props;
 ---
 
-<Layout title="Rose Bowen Visuals">
-  <Container>
-    <Grid>
-      <div class="col-span-4 md:col-span-12 mt-[80px] md:mt-[120px]">
-        <div class="flex items-center gap-5">
+<section id="work-page">
+  <Layout title="Rose Bowen Visuals">
+    <Container>
+      <Grid className="work-items-container">
+        <div
+          class="work-item flex items-center gap-5 col-span-4 md:col-span-12 mt-[80px] md:mt-[120px]"
+        >
           <a href="/#work" class="flex items-center">
             <button class="rotate-180" aria-label="Back to home">
               <ArrowIcon color="#4CFFF4" />
@@ -201,51 +204,81 @@ const { title, paragraphs, media, websiteUrl } = Astro.props;
           </a>
           <h1 class="text-[34px] md:text-[60px]">{title}</h1>
         </div>
-      </div>
-      <div
-        class="col-span-4 md:col-span-8 [&>p]:text-[20px] md:[&>p]:text-[30px] [&>p]: [&>p]:leading-[110%] [&>p]:mt-6 md:[&>p]:mt-10"
-      >
-        {
-          paragraphs.map((paragraph) => (
-            <p class="mb-4">
-              {paragraph.map((segment: { text: string; format: string }) => (
-                <TextSpan text={segment.text} format={segment.format} />
-              ))}
-            </p>
-          ))
-        }
-      </div>
-      <div class="col-span-4 md:col-span-12 mt-[16px] md:mt-[24px]">
-        <a target="_blank" class="block w-fit" href={websiteUrl}>
-          <Button>Visit website</Button>
-        </a>
-      </div>
-      <div
-        class="col-span-4 md:col-span-12 w-full flex flex-col gap-[20px] md:gap-[50px] md:mb-[120px] mt-[52px] md:mt-[80px]"
-      >
-        {
-          media.map((media) =>
-            media.type === "video" ? (
-              <video
-                autoplay
-                loop
-                muted
-                playsinline
-                class="object-cover max-h-[500px] md:max-h-[800px] w-full object-center rounded-xl md:rounded-lg"
-              >
-                <source src={media.src} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            ) : (
-              <img
-                class="rounded-xl md:rounded-lg"
-                src={media.src}
-                alt={media.alt}
-              />
+        <div
+          class="col-span-4 md:col-span-8 [&>p]:text-[20px] md:[&>p]:text-[30px] [&>p]: [&>p]:leading-[110%] [&>p]:mt-6 md:[&>p]:mt-10"
+        >
+          {
+            paragraphs.map((paragraph) => (
+              <p class="mb-4 work-item">
+                {paragraph.map((segment: { text: string; format: string }) => (
+                  <TextSpan text={segment.text} format={segment.format} />
+                ))}
+              </p>
+            ))
+          }
+        </div>
+        <div class="col-span-4 md:col-span-12 mt-[16px] md:mt-[24px]">
+          <a target="_blank" class="block w-fit work-item" href={websiteUrl}>
+            <Button>Visit website</Button>
+          </a>
+        </div>
+        <div
+          class="col-span-4 md:col-span-12 w-full flex flex-col gap-[20px] md:gap-[50px] md:mb-[120px] mt-[52px] md:mt-[80px]"
+        >
+          {
+            media.map((media) =>
+              media.type === "video" ? (
+                <video
+                  autoplay
+                  loop
+                  muted
+                  playsinline
+                  class="object-cover max-h-[500px] md:max-h-[800px] w-full object-center rounded-xl md:rounded-lg"
+                >
+                  <source src={media.src} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <img
+                  class="rounded-xl md:rounded-lg"
+                  src={media.src}
+                  alt={media.alt}
+                />
+              )
             )
-          )
-        }
-      </div>
-    </Grid>
-  </Container>
-</Layout>
+          }
+        </div>
+      </Grid>
+    </Container>
+  </Layout>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+
+  function setupInfoAnimation() {
+    const workItemsContainer = document?.querySelector(".work-items-container");
+    const workTexts = workItemsContainer?.querySelectorAll(".work-item");
+
+    if (!workItemsContainer || !workTexts) return;
+
+    // Container and text animation
+    gsap.fromTo(
+      [workItemsContainer, ...workTexts],
+      {
+        opacity: 0,
+        y: 50,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 2,
+        ease: "power2.out",
+        stagger: 0.2,
+      }
+    );
+  }
+
+  // Run the animation when the DOM is fully loaded
+  document.addEventListener("DOMContentLoaded", setupInfoAnimation);
+</script>

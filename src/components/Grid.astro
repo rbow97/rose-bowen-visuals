@@ -1,7 +1,11 @@
 ---
+import { clsx } from "clsx";
 
+const { className } = Astro.props;
 ---
 
-<div class="grid grid-cols-4 md:grid-cols-12 gap-x-2 md:gap-x-4">
+<div
+  class={clsx("grid grid-cols-4 md:grid-cols-12 gap-x-2 md:gap-x-4", className)}
+>
   <slot />
 </div>
