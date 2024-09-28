@@ -1,14 +1,15 @@
 ---
 import { Image } from "astro:assets";
+import roseAndCatherine from "../../assets/polaroids/images/rose-and-catherine.jpeg";
+import purpleRose from "../../assets/polaroids/images/purple-rose.jpeg";
+import roseAndJenny from "../../assets/polaroids/images/rose-and-jenny.jpeg";
+import roseInEdinburgh from "../../assets/polaroids/images/rose-in-edinburgh.jpeg";
 
 const images = [
-  { src: "/images/me/purple-rose.JPG", caption: "Serving" },
-  { src: "/images/me/rose-and-jenny.png", caption: "Me and Jenny <3" },
-  {
-    src: "/images/me/rose-in-edinburgh.jpeg",
-    caption: "On top of the world!!",
-  },
-  { src: "/images/me/rose-and-catherine.jpeg", caption: "Me and Catherine" },
+  { src: purpleRose, caption: "Serving" },
+  { src: roseAndJenny, caption: "Me and Jenny <3" },
+  { src: roseInEdinburgh, caption: "On top of the world!!" },
+  { src: roseAndCatherine, caption: "Me and Catherine" },
 ];
 ---
 
@@ -26,8 +27,6 @@ const images = [
             <Image
               src={image.src}
               alt={image.caption}
-              width="340"
-              height="340"
               class="w-full h-full object-cover"
             />
             <div class="absolute h-[20px] md:h-[52px] bottom-0 left-0 right-0 text-primary-white font-semibold text-[10px] md:text-[14px] flex items-center justify-center p-2 md:p-4 transition-opacity duration-300">
