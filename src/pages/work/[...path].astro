@@ -195,15 +195,15 @@ const { title, paragraphs, media, websiteUrl } = Astro.props;
       <div class="col-span-4 md:col-span-12 mt-[80px] md:mt-[120px]">
         <div class="flex items-center gap-5">
           <a href="/#work" class="flex items-center">
-            <button aria-label="Back to home">
-              <ArrowIcon color="#4CFFF4" transform="rotate(180)" />
+            <button class="rotate-180" aria-label="Back to home">
+              <ArrowIcon color="#4CFFF4" />
             </button>
           </a>
-          <h1 class="text-[36px] md:text-[60px] text-primary-blue">{title}</h1>
+          <h1 class="text-[34px] md:text-[60px] text-primary-blue">{title}</h1>
         </div>
       </div>
       <div
-        class="col-span-4 md:col-span-8 [&>p]:text-[16px] md:[&>p]:text-[30px] [&>p]:text-primary-blue [&>p]:leading-[110%] [&>p]:mt-6 md:[&>p]:mt-10"
+        class="col-span-4 md:col-span-8 [&>p]:text-[20px] md:[&>p]:text-[30px] [&>p]:text-primary-blue [&>p]:leading-[110%] [&>p]:mt-6 md:[&>p]:mt-10"
       >
         {
           paragraphs.map((paragraph) => (
