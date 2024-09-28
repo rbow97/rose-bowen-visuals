@@ -3,6 +3,11 @@ import Header from "../components/homepage/Header.astro";
 import { LinkedInIcon } from "../components/icons/LinkedInIcon";
 import LoadingOverlay from "../components/LoadingOverlay.astro";
 
+// import defaultBg from "/images/backgrounds/rose-bowen-default.png";
+// import pinkBg from "/images/backgrounds/rose-bowen-pink.png";
+// import orangeBg from "/images/backgrounds/rose-bowen-orange.png";
+// import blueBg from "/images/backgrounds/rose-bowen-blue.png";
+
 interface Props {
   title: string;
 }
@@ -30,8 +35,29 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <link
+      rel="preload"
+      as="image"
+      href="/images/backgrounds/rose-bowen-default.png"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="/images/backgrounds/rose-bowen-blue.png"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="/images/backgrounds/rose-bowen-pink.png"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="/images/backgrounds/rose-bowen-orange.png"
+    />
   </head>
-  <body class="bg-hero bg-cover bg-no-repeat">
+  <body class="bg-cover bg-no-repeat theme-default">
+    <div id="bg-overlay"></div>
     <LoadingOverlay />
     <Header />
     <!-- Overflow hidden for polaroids -->
@@ -47,15 +73,121 @@ const { title } = Astro.props;
 </html>
 
 <style is:global>
-  :root {
+  /* Theme classes */
+  .theme-default {
+    --text-color: #4cfff4;
+    --arrow-icon-color: #000000;
+    --button-border-color: #4cfff4;
+    --work-button-bg-color: #4cfff4;
+    --work-button-text-color: #000000;
+    --button-bg-color: transparent;
+    --button-text-color: #4cfff4;
+    --button-hover-text-color: #000000;
+    --theme-button-color: #4cfff4;
+    --bg-image: url("/images/backgrounds/rose-bowen-default.png");
   }
+
+  .theme-blue {
+    --text-color: #0f1010;
+    --arrow-icon-color: #0f1010;
+    --button-border-color: #0f1010;
+    --work-button-bg-color: #4cfff4;
+    --work-button-text-color: #000000;
+    --button-bg-color: transparent;
+    --button-text-color: #0f1010;
+    --button-hover-text-color: #ffffff;
+    --theme-button-color: #0f1010;
+    --bg-image: url("/images/backgrounds/rose-bowen-blue.png");
+  }
+
+  .theme-pink {
+    --text-color: #ffffff;
+    --arrow-icon-color: #ffffff;
+    --button-border-color: #ffffff;
+    --work-button-bg-color: #ff69b4;
+    --work-button-text-color: #ffffff;
+    --button-bg-color: transparent;
+    --button-text-color: #ffffff;
+    --button-hover-text-color: #ff69b4;
+    --theme-button-color: #ffffff;
+    --bg-image: url("/images/backgrounds/rose-bowen-pink.png");
+  }
+
+  .theme-orange {
+    --text-color: #ffff1d;
+    --arrow-icon-color: #000000;
+    --button-border-color: #ffff1d;
+    --work-button-bg-color: #ffff1d;
+    --work-button-text-color: #000000;
+    --button-bg-color: transparent;
+    --button-text-color: #ffff1d;
+    --button-hover-text-color: #ff8c00;
+    --theme-button-color: #ffff1d;
+    --bg-image: url("/images/backgrounds/rose-bowen-orange.png");
+  }
+
+  /* Theme button styles */
+  .theme-button-svg {
+    transition: all 0.3s ease;
+  }
+
+  .theme-button-stroke {
+    stroke: var(--theme-button-color);
+    transition: all 750ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .theme-button-fill,
+  .social-linkedin-fill {
+    fill: var(--theme-button-color);
+    stroke: var(--theme-button-color);
+    transition: all 750ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .work-button {
+    background-color: var(--work-button-bg-color);
+    transition: all 750ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .work-button * {
+    color: var(--work-button-text-color);
+    fill: var(--work-button-text-color);
+    transition: all 750ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .arrow-icon {
+    fill: var(--text-color);
+    transition: all 750ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  body {
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: var(--text-color);
+    transition: color 750ms cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+  }
+
+  #bg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 750ms cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
+  }
+
   html {
     font-family: "Space Grotesk", sans-serif;
-
-    * {
-      color: black;
-    }
   }
+
   code {
     font-family:
       "Surreal",
@@ -68,3 +200,78 @@ const { title } = Astro.props;
       monospace;
   }
 </style>
+
+<script>
+  const backgroundImages = [
+    "/images/backgrounds/rose-bowen-default.png",
+    "/images/backgrounds/rose-bowen-blue.png",
+    "/images/backgrounds/rose-bowen-pink.png",
+    "/images/backgrounds/rose-bowen-orange.png",
+  ];
+
+  let currentTheme = "theme-default";
+
+  const loadingOverlay: HTMLDivElement =
+    document.querySelector(".loading-overlay")!;
+
+  // Wait for images to load before hiding the loading overlay
+  window.addEventListener("load", () => {
+    preloadImages(backgroundImages)
+      .then(() => {
+        // Hide loading overlay here
+        loadingOverlay.style.display = "none";
+        // Set up the theme observer after images are loaded
+        setupThemeObserver();
+      })
+      .catch((error) => {
+        console.error("Failed to preload images:", error);
+        // Hide loading overlay even if image loading fails
+        loadingOverlay.style.display = "none";
+        // Set up the theme observer even if image loading fails
+        setupThemeObserver();
+      });
+  });
+
+  function setupThemeObserver() {
+    const observer = new MutationObserver(updateBackground);
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+  }
+
+  function preloadImages(urls: string[]) {
+    const loadPromises = urls.map((url) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = url;
+      });
+    });
+    return Promise.all(loadPromises);
+  }
+
+  function updateBackground() {
+    const body = document.body;
+    const overlay = document.getElementById("bg-overlay")!;
+
+    if (body.classList.contains(currentTheme)) return;
+
+    const newTheme = Array.from(body.classList).find((cls) =>
+      cls.startsWith("theme-")
+    );
+    if (!newTheme) return;
+
+    overlay.style.backgroundImage = getComputedStyle(body).backgroundImage;
+    overlay.style.opacity = "1";
+
+    setTimeout(() => {
+      body.style.backgroundImage =
+        getComputedStyle(body).getPropertyValue("--bg-image");
+      overlay.style.opacity = "0";
+    }, 50);
+
+    currentTheme = newTheme;
+  }
+</script>

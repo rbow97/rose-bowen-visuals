@@ -2,6 +2,7 @@
 import Button from "../Button.astro";
 import { InstagramIcon } from "../icons/InstagramIcon";
 import { LinkedInIcon } from "../icons/LinkedInIcon";
+import { ThemeButton } from "../ThemeButton";
 
 const menuItems = [
   { href: "/", label: "Rose Bowen" },
@@ -30,8 +31,9 @@ const menuItems = [
     <button
       aria-label="Change the colour theme"
       class="ml-4 theme-button menu-item"
+      id="colourThemeButton"
     >
-      <img src="/images/icons/theme-button.svg" />
+      <ThemeButton id="theme-button-svg" />
     </button>
   </div>
   <div class="gap-4 items-center md:flex hidden">
@@ -49,13 +51,9 @@ const menuItems = [
 </header>
 
 <style>
-  .theme-button img {
+  .theme-button-svg {
     transition: transform 0.3s ease;
     transform: rotate(var(--rotation, 0deg));
-  }
-
-  .theme-button img.hover {
-    transform: rotate(var(--rotation, 0deg)) scale(1.1);
   }
 
   .menu-item {
@@ -65,59 +63,93 @@ const menuItems = [
 </style>
 
 <script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const themeButton = document.getElementById("colourThemeButton");
+  const themeButtonSvg = document.getElementById("theme-button-svg");
+  const themes = ["theme-default", "theme-blue", "theme-pink", "theme-orange"];
+
+  let currentThemeIndex = parseInt(localStorage.getItem("themeIndex") || "0");
   let hasAnimatedNavbar = false;
 
-  function handleScroll() {
-    const themeButtonImg: HTMLImageElement =
-      document.querySelector(".theme-button img")!;
-    if (themeButtonImg) {
-      const scrollPercentage =
-        window.scrollY /
-        (document.documentElement.scrollHeight - window.innerHeight);
-      const rotation = scrollPercentage * 360;
-      themeButtonImg.style.setProperty("--rotation", `${rotation}deg`);
+  document.body.classList.add(themes[currentThemeIndex]);
+
+  if (themeButton) {
+    themeButton.addEventListener("click", cycleTheme);
+  }
+
+  // Listen for the loadingComplete event
+  document.addEventListener("loadingComplete", () => {
+    animateMenuItems();
+    setupThemeButtonRotation();
+    setupThemeButtonHover();
+  });
+
+  function setupThemeButtonRotation() {
+    if (themeButtonSvg) {
+      gsap.to(themeButtonSvg, {
+        rotation: 360,
+        ease: "none",
+        scrollTrigger: {
+          trigger: document.body,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 0.1,
+        },
+      });
     }
   }
 
   function setupThemeButtonHover() {
-    const themeButtonImg = document.querySelector(".theme-button img");
-    if (themeButtonImg) {
-      themeButtonImg.addEventListener("mouseenter", () =>
-        themeButtonImg.classList.add("hover")
-      );
-      themeButtonImg.addEventListener("mouseleave", () =>
-        themeButtonImg.classList.remove("hover")
-      );
+    if (themeButtonSvg) {
+      themeButtonSvg.addEventListener("mouseenter", () => {
+        gsap.to(themeButtonSvg, {
+          scale: 1.1,
+          duration: 0.3,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+      });
+      themeButtonSvg.addEventListener("mouseleave", () => {
+        gsap.to(themeButtonSvg, {
+          scale: 1,
+          duration: 0.3,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+      });
     }
   }
 
   function animateMenuItems() {
-    if (hasAnimatedNavbar) return; // Skip if already animated
+    if (hasAnimatedNavbar) return;
 
     const menuItems = document.querySelectorAll(".menu-item");
     menuItems.forEach((item, index) => {
-      item.animate(
-        [
-          { opacity: 0, transform: "translateY(-20px)" },
-          { opacity: 1, transform: "translateY(0)" },
-        ],
+      gsap.fromTo(
+        item,
+        { opacity: 0, y: -20 },
         {
-          duration: 3000,
-          easing: "cubic-bezier(.16,1,.3,1)",
-          fill: "forwards",
-          delay: index * 100,
+          opacity: 1,
+          y: 0,
+          duration: 3,
+          ease: "power3.out",
+          delay: index * 0.1,
         }
       );
     });
 
-    hasAnimatedNavbar = true; // Set the flag after animation
+    hasAnimatedNavbar = true;
   }
 
-  window.addEventListener("scroll", handleScroll);
-
-  // Listen for the loadingComplete event
-  document.addEventListener("loadingComplete", () => {
-    setupThemeButtonHover();
-    animateMenuItems();
-  });
+  function cycleTheme() {
+    const body = document.body;
+    body.classList.remove(themes[currentThemeIndex]);
+    currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+    body.classList.add(themes[currentThemeIndex]);
+    localStorage.setItem("themeIndex", currentThemeIndex.toString());
+  }
 </script>

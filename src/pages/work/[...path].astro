@@ -1,5 +1,5 @@
 ---
-import { ArrowIcon } from "../../components/ArrowIcon";
+import { ArrowIcon } from "../../components/icons/ArrowIcon";
 import Button from "../../components/Button.astro";
 import Container from "../../components/Container.astro";
 import Grid from "../../components/Grid.astro";
@@ -199,11 +199,11 @@ const { title, paragraphs, media, websiteUrl } = Astro.props;
               <ArrowIcon color="#4CFFF4" />
             </button>
           </a>
-          <h1 class="text-[34px] md:text-[60px] text-primary-blue">{title}</h1>
+          <h1 class="text-[34px] md:text-[60px]">{title}</h1>
         </div>
       </div>
       <div
-        class="col-span-4 md:col-span-8 [&>p]:text-[20px] md:[&>p]:text-[30px] [&>p]:text-primary-blue [&>p]:leading-[110%] [&>p]:mt-6 md:[&>p]:mt-10"
+        class="col-span-4 md:col-span-8 [&>p]:text-[20px] md:[&>p]:text-[30px] [&>p]: [&>p]:leading-[110%] [&>p]:mt-6 md:[&>p]:mt-10"
       >
         {
           paragraphs.map((paragraph) => (
